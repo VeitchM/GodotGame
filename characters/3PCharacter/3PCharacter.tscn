@@ -1,0 +1,17 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://characters/baseCharacter/baseCharacter.tscn" type="PackedScene" id=1]
+[ext_resource path="res://characters/player/PlayerPov.tscn" type="PackedScene" id=2]
+[ext_resource path="res://characters/CollisionShape.tscn" type="PackedScene" id=3]
+[ext_resource path="res://characters/3PCharacter/3PCharacter.gd" type="Script" id=4]
+
+[node name="3PCharacter" instance=ExtResource( 1 )]
+script = ExtResource( 4 )
+
+[node name="LookPivot" parent="." index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0 )
+
+[node name="POV" parent="LookPivot" index="1" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.09, 0 )
+
+[node name="CollisionShape" parent="." index="1" instance=ExtResource( 3 )]

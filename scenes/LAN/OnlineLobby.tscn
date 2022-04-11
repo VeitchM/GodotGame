@@ -1,0 +1,123 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://scenes/LAN/OnlineLobby.gd" type="Script" id=1]
+[ext_resource path="res://resources/2d/Fonts/SansSerifTittle.tres" type="DynamicFont" id=2]
+[ext_resource path="res://scenes/LAN/HostJoin.gd" type="Script" id=3]
+
+[node name="MenuLan" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = 896.0
+margin_bottom = 480.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HostJoin" type="Control" parent="."]
+margin_right = 1920.0
+margin_bottom = 1080.0
+grow_horizontal = 0
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NinePatchRect" type="NinePatchRect" parent="HostJoin"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 10.0
+margin_bottom = 10.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HostJoin/NinePatchRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -1.78174
+margin_bottom = -1.78174
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PanelContainer" type="PanelContainer" parent="HostJoin/NinePatchRect/VBoxContainer"]
+margin_right = 1920.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 0, 100 )
+
+[node name="Server Name" type="Label" parent="HostJoin/NinePatchRect/VBoxContainer/PanelContainer"]
+margin_left = 7.0
+margin_top = 32.0
+margin_right = 1913.0
+margin_bottom = 67.0
+custom_fonts/font = ExtResource( 2 )
+text = "Server Name"
+align = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HostJoin/NinePatchRect/VBoxContainer"]
+margin_top = 104.0
+margin_right = 1920.0
+margin_bottom = 636.0
+rect_min_size = Vector2( 200, 400 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HostJoin/NinePatchRect/VBoxContainer/HBoxContainer"]
+margin_right = 209.0
+margin_bottom = 532.0
+rect_min_size = Vector2( 0, 500 )
+
+[node name="Players inf" type="VBoxContainer" parent="HostJoin/NinePatchRect/VBoxContainer/HBoxContainer/VBoxContainer"]
+margin_right = 209.0
+margin_bottom = 300.0
+rect_min_size = Vector2( 0, 300 )
+
+[node name="Label" type="Label" parent="HostJoin/NinePatchRect/VBoxContainer/HBoxContainer/VBoxContainer/Players inf"]
+margin_right = 209.0
+margin_bottom = 48.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "Aca va cada jugador que ingresa para jugar
+"
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ChatSystem" type="VBoxContainer" parent="HostJoin/NinePatchRect/VBoxContainer/HBoxContainer/VBoxContainer"]
+margin_top = 304.0
+margin_right = 209.0
+margin_bottom = 532.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Chat" type="RichTextLabel" parent="HostJoin/NinePatchRect/VBoxContainer/HBoxContainer/VBoxContainer/ChatSystem"]
+margin_right = 209.0
+margin_bottom = 200.0
+rect_min_size = Vector2( 0, 200 )
+bbcode_enabled = true
+
+[node name="ChatInput" type="HBoxContainer" parent="HostJoin/NinePatchRect/VBoxContainer/HBoxContainer/VBoxContainer/ChatSystem"]
+margin_top = 204.0
+margin_right = 209.0
+margin_bottom = 228.0
+rect_min_size = Vector2( 200, 0 )
+alignment = 2
+
+[node name="PlayersName" type="Label" parent="HostJoin/NinePatchRect/VBoxContainer/HBoxContainer/VBoxContainer/ChatSystem/ChatInput"]
+margin_top = 5.0
+margin_right = 55.0
+margin_bottom = 19.0
+text = "[Player] :"
+
+[node name="chatInput" type="LineEdit" parent="HostJoin/NinePatchRect/VBoxContainer/HBoxContainer/VBoxContainer/ChatSystem/ChatInput"]
+margin_left = 59.0
+margin_right = 209.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 150, 0 )
+[connection signal="text_entered" from="HostJoin/NinePatchRect/VBoxContainer/HBoxContainer/VBoxContainer/ChatSystem/ChatInput/chatInput" to="HostJoin" method="_on_chatInput_text_entered"]

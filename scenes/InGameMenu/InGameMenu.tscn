@@ -1,0 +1,45 @@
+[gd_scene format=2]
+
+[node name="InGameMenu" type="Control"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 1.1225
+margin_top = -7.85721
+margin_right = 1.12256
+margin_bottom = -7.85718
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+margin_left = 29.4898
+margin_top = 269.244
+margin_right = 228.49
+margin_bottom = 394.244
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Resume" type="Button" parent="VBoxContainer"]
+margin_right = 199.0
+margin_bottom = 39.0
+size_flags_vertical = 3
+text = "Resume"
+
+[node name="Settings" type="Button" parent="VBoxContainer"]
+margin_top = 43.0
+margin_right = 199.0
+margin_bottom = 82.0
+size_flags_vertical = 3
+text = "Settings"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Quit" type="Button" parent="VBoxContainer"]
+margin_top = 86.0
+margin_right = 199.0
+margin_bottom = 125.0
+size_flags_vertical = 3
+text = "Quit"

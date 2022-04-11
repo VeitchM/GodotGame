@@ -1,0 +1,112 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://scenes/mainMenu/MainMenu.gd" type="Script" id=1]
+[ext_resource path="res://scenes/Coop LAN.gd" type="Script" id=2]
+[ext_resource path="res://scenes/mainMenu/ControllerMainMenu.gd" type="Script" id=3]
+[ext_resource path="res://scenes/mainMenu/Coop LAN.gd" type="Script" id=4]
+
+[node name="MainMenu" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_pivot_offset = Vector2( -895.533, 800.474 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MainButtonsMenu" type="VBoxContainer" parent="."]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_top = -68.0
+margin_right = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Play" type="Button" parent="MainButtonsMenu"]
+margin_right = 63.0
+margin_bottom = 20.0
+text = "Play"
+
+[node name="Settings" type="Button" parent="MainButtonsMenu"]
+margin_top = 24.0
+margin_right = 63.0
+margin_bottom = 44.0
+text = "Settings"
+
+[node name="Quit" type="Button" parent="MainButtonsMenu"]
+margin_top = 48.0
+margin_right = 63.0
+margin_bottom = 68.0
+text = "Quit"
+
+[node name="PlayMenu" type="VBoxContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_bottom = 68.0
+grow_horizontal = 2
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Coop LAN" type="Button" parent="PlayMenu"]
+margin_right = 81.0
+margin_bottom = 20.0
+text = "Coop LAN"
+script = ExtResource( 2 )
+
+[node name="Perro Malo" type="Button" parent="PlayMenu"]
+margin_top = 24.0
+margin_right = 81.0
+margin_bottom = 44.0
+text = "Perro Malo"
+
+[node name="Back" type="Button" parent="PlayMenu"]
+margin_top = 48.0
+margin_right = 81.0
+margin_bottom = 68.0
+text = "Back"
+
+[node name="Menu LAN" type="VBoxContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+rect_min_size = Vector2( 85, 0 )
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Host Button" type="Button" parent="Menu LAN"]
+margin_right = 85.0
+margin_bottom = 20.0
+text = "Host"
+
+[node name="Join Button" type="Button" parent="Menu LAN"]
+margin_top = 24.0
+margin_right = 85.0
+margin_bottom = 44.0
+text = "Join"
+
+[node name="Back Button" type="Button" parent="Menu LAN"]
+margin_top = 48.0
+margin_right = 85.0
+margin_bottom = 68.0
+text = "Back"
+script = ExtResource( 4 )
+
+[node name="ControllerMainMenu" type="Node" parent="."]
+script = ExtResource( 3 )
+[connection signal="pressed" from="MainButtonsMenu/Play" to="." method="_on_Play_pressed"]
+[connection signal="pressed" from="MainButtonsMenu/Settings" to="." method="_on_Settings_pressed"]
+[connection signal="pressed" from="MainButtonsMenu/Quit" to="." method="_on_Quit_pressed"]
+[connection signal="pressed" from="PlayMenu/Coop LAN" to="PlayMenu/Coop LAN" method="_on_Coop_LAN_pressed"]
+[connection signal="pressed" from="PlayMenu/Back" to="." method="_on_Back_pressed"]
+[connection signal="pressed" from="Menu LAN/Host Button" to="ControllerMainMenu" method="_on_Host_Button_pressed"]
+[connection signal="pressed" from="Menu LAN/Join Button" to="ControllerMainMenu" method="_on_Join_Button_pressed"]
+[connection signal="pressed" from="Menu LAN/Back Button" to="Menu LAN/Back Button" method="_on_Back_Button_pressed"]

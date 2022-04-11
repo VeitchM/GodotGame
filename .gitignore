@@ -1,0 +1,8 @@
+*.TMP
+*.exe
+*.pck
+*.glb*
+/.mono
+/.import
+/.vscode
+*.material

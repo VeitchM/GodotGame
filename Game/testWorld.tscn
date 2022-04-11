@@ -1,0 +1,81 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Game/testWorld.gd" type="Script" id=3]
+[ext_resource path="res://scenes/Debugger/Checker.tres" type="Material" id=4]
+
+[sub_resource type="CubeMesh" id=3]
+
+[sub_resource type="ConcavePolygonShape" id=4]
+data = PoolVector3Array( -1, 1, 1, 1, 1, 1, -1, -1, 1, 1, 1, 1, 1, -1, 1, -1, -1, 1, 1, 1, -1, -1, 1, -1, 1, -1, -1, -1, 1, -1, -1, -1, -1, 1, -1, -1, 1, 1, 1, 1, 1, -1, 1, -1, 1, 1, 1, -1, 1, -1, -1, 1, -1, 1, -1, 1, -1, -1, 1, 1, -1, -1, -1, -1, 1, 1, -1, -1, 1, -1, -1, -1, 1, 1, 1, -1, 1, 1, 1, 1, -1, -1, 1, 1, -1, 1, -1, 1, 1, -1, -1, -1, 1, 1, -1, 1, -1, -1, -1, 1, -1, 1, 1, -1, -1, -1, -1, -1 )
+
+[sub_resource type="PrismMesh" id=5]
+
+[sub_resource type="ConcavePolygonShape" id=6]
+data = PoolVector3Array( 0, 1, 1, 1, -1, 1, -1, -1, 1, 0, 1, -1, -1, -1, -1, 1, -1, -1, 0, 1, 1, 0, 1, -1, 1, -1, 1, 0, 1, -1, 1, -1, -1, 1, -1, 1, 0, 1, -1, 0, 1, 1, -1, -1, -1, 0, 1, 1, -1, -1, 1, -1, -1, -1, -1, -1, 1, 1, -1, 1, -1, -1, -1, 1, -1, 1, 1, -1, -1, -1, -1, -1 )
+
+[node name="world" type="Spatial"]
+script = ExtResource( 3 )
+
+[node name="CSGCombiner" type="CSGCombiner" parent="."]
+use_collision = true
+
+[node name="Piso" type="CSGBox" parent="CSGCombiner"]
+transform = Transform( 17.5324, 0, 0, 0, 1, 0, 0, 0, 10.8025, -40.1044, -0.580637, -17.024 )
+material = ExtResource( 4 )
+
+[node name="Piso2" type="CSGBox" parent="CSGCombiner"]
+transform = Transform( -213.545, 0, 0, 0, 1, 0, 0, 0, -131.574, 59.8956, -10.5806, 40.976 )
+material = ExtResource( 4 )
+
+[node name="Poste" type="CSGBox" parent="CSGCombiner"]
+transform = Transform( 5.20885, 0, 0, 0, 134.1, 0, 0, 0, 3.2094, -3.98198, 10.689, 31.5318 )
+material = ExtResource( 4 )
+
+[node name="Poste2" type="CSGBox" parent="CSGCombiner"]
+transform = Transform( 5.20885, 0, 0, 0, 134.1, 0, 0, 0, 3.2094, 49.018, 10.689, 28.5318 )
+material = ExtResource( 4 )
+
+[node name="Plataforma" type="RigidBody" parent="."]
+transform = Transform( 14, 0, 0, 0, 0.312, 0, 0, 0, 6, 0.232, 2, -16 )
+mode = 3
+
+[node name="Plataforma" type="MeshInstance" parent="Plataforma"]
+mesh = SubResource( 3 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Plataforma"]
+shape = SubResource( 4 )
+
+[node name="Suelo3" type="StaticBody" parent="."]
+transform = Transform( 47.6809, 0, 0, 0, 0.314286, 0, 0, 0, 47.6809, 22.2245, -1.52493, 3.53102 )
+
+[node name="Suelo" type="MeshInstance" parent="Suelo3"]
+transform = Transform( 0.272082, 0, 0, 0, 1, 0, 0, 0, 0.272082, -0.466109, 4.85205, -0.0740552 )
+mesh = SubResource( 3 )
+material/0 = ExtResource( 4 )
+
+[node name="CollisionShape2" type="CollisionShape" parent="Suelo3"]
+transform = Transform( 0.272082, 0, 0, 0, 1, 0, 0, 0, 0.272082, -0.466109, 4.85205, -0.0740552 )
+shape = SubResource( 4 )
+
+[node name="PlataformaEl" type="StaticBody" parent="."]
+transform = Transform( 12.9731, 0, 0, 0, 0.314286, 0, 0, 0, 12.9731, 0, 0, 0 )
+
+[node name="Suelo2" type="MeshInstance" parent="PlataformaEl"]
+transform = Transform( 3.67537, 0, 0, 0, 1, 0, 0, 0, 3.67537, 1.71312, -4.85205, 0.27218 )
+mesh = SubResource( 3 )
+material/0 = ExtResource( 4 )
+
+[node name="CollisionShape" type="CollisionShape" parent="PlataformaEl"]
+transform = Transform( 3.67537, 0, 0, 0, 1, 0, 0, 0, 3.67537, 1.71312, -4.85205, 0.27218 )
+shape = SubResource( 4 )
+
+[node name="StaticBody2" type="StaticBody" parent="."]
+transform = Transform( 9.31669, 0, 0, 0, 1.89999, 0, 0, 0, 1.89749, 0, 0, -5.14806 )
+
+[node name="MeshInstance3" type="MeshInstance" parent="StaticBody2"]
+mesh = SubResource( 5 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="StaticBody2"]
+shape = SubResource( 6 )

@@ -1,0 +1,50 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://scenes/LAN/Buscar.gd" type="Script" id=1]
+
+[node name="Buscar" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="NinePatchRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="NinePatchRect/VBoxContainer"]
+margin_right = 1080.0
+margin_bottom = 200.0
+rect_min_size = Vector2( 0, 200 )
+size_flags_horizontal = 3
+
+[node name="PartidasYBotones" type="HBoxContainer" parent="NinePatchRect/VBoxContainer"]
+margin_top = 204.0
+margin_right = 1080.0
+margin_bottom = 720.0
+rect_min_size = Vector2( 0, 400 )
+size_flags_vertical = 3
+
+[node name="PartidasVisibles" type="VBoxContainer" parent="NinePatchRect/VBoxContainer/PartidasYBotones"]
+margin_right = 876.0
+margin_bottom = 516.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ButtonsSearch" type="PanelContainer" parent="NinePatchRect/VBoxContainer/PartidasYBotones"]
+margin_left = 880.0
+margin_right = 1080.0
+margin_bottom = 516.0
+rect_min_size = Vector2( 200, 0 )

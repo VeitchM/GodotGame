@@ -1,0 +1,46 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://scenes/OnlineStats/StatsInGamePlayerInfo.gd" type="Script" id=1]
+[ext_resource path="res://scenes/LAN/jugadores.tscn" type="PackedScene" id=2]
+[ext_resource path="res://resources/2d/Fonts/SansSerifTittle.tres" type="DynamicFont" id=3]
+
+[node name="StatsInGamePlayerInfo" instance=ExtResource( 2 )]
+script = ExtResource( 1 )
+
+[node name="PlayerName" type="Label" parent="Panel" index="0"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -1.33484
+margin_top = -1.33484
+margin_right = -1.33484
+margin_bottom = -1.33484
+custom_fonts/font = ExtResource( 3 )
+text = "Jorges"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel3" type="Panel" parent="." index="2"]
+margin_left = 608.0
+margin_right = 879.0
+margin_bottom = 100.0
+size_flags_horizontal = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Ping" type="Label" parent="Panel3" index="0"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 10.0
+margin_right = -10.0
+margin_bottom = -10.0
+text = "Ping not Loaded"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}

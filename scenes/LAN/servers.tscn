@@ -1,0 +1,63 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://scenes/LAN/servers.gd" type="Script" id=1]
+
+[node name="HBoxContainer" type="HBoxContainer"]
+anchor_top = -0.000982094
+anchor_right = 1.0
+anchor_bottom = 0.999018
+margin_left = -2.0
+margin_right = -282.0
+margin_bottom = -656.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NinePatchRect2" type="NinePatchRect" parent="."]
+margin_right = 200.0
+margin_bottom = 64.0
+rect_min_size = Vector2( 200, 60 )
+patch_margin_left = 10
+patch_margin_top = 10
+patch_margin_right = 10
+patch_margin_bottom = 10
+
+[node name="serverName" type="Label" parent="NinePatchRect2"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 0.887756
+margin_top = 7.55103
+margin_right = 195.888
+margin_bottom = 25.551
+rect_min_size = Vector2( 200, 64 )
+text = "Server
+"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
+margin_left = 204.0
+margin_right = 264.0
+margin_bottom = 64.0
+rect_min_size = Vector2( 60, 40 )
+patch_margin_left = 10
+patch_margin_top = 10
+patch_margin_right = 10
+patch_margin_bottom = 10
+
+[node name="joinServer" type="Button" parent="NinePatchRect"]
+margin_left = 228.148
+margin_top = 22.2245
+margin_right = 303.148
+margin_bottom = 62.2245
+grow_horizontal = 2
+rect_min_size = Vector2( 30, 40 )
+text = "Join"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="pressed" from="NinePatchRect/joinServer" to="." method="_on_joinServer_pressed"]
