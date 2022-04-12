@@ -1,10 +1,10 @@
-extends KinematicBody
+extends CharacterBody3D
 class_name BaseCharacter #abstract
 
 
 var animationController 
-onready var lookPivot : Spatial = $LookPivot
-onready var rayCast : RayCast = $LookPivot/RayCast
+@onready var lookPivot : Node3D = $LookPivot
+@onready var rayCast3D : RayCast3D = $LookPivot/RayCast3D
 #You must asignate this value in the instance of any not abstract sublass
 
 const MAX_SPEED=10
@@ -75,7 +75,7 @@ class CharState: #It has the variables velocity : Vector3 position : Vector3 wal
 var jumpSended : float = 0
 
 func infoToServer() -> Array: #send in a compressed way to server, to improve
-	var aux =  [id, charState.serverTimeStamp, OS.get_ticks_msec(), charState.position,charState.walk,charState.action, jumpSended,Vector2(lookPivot.rotation.x,rotation.y)] #toDo, hookFunctionalities.hookInfoToServer()]
+	var aux =  [id, charState.serverTimeStamp, Time.get_ticks_msec(), charState.position,charState.walk,charState.action, jumpSended,Vector2(lookPivot.rotation.x,rotation.y)] #toDo, hookFunctionalities.hookInfoToServer()]
 	if jumpSended>0:
 		print("JumpSended")
 	jumpSended = 0
@@ -151,25 +151,38 @@ func useInfoToClient(player :CharacterToClient):
 	turn(player.rotation)
 	
 #::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-var hookFunctionalities : Hook 
 
+
+
+
+
+
+#>>>>>>>>>>>>>>>>>>>>>>>>INIT>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 func _init():
 	#set_physics_process(false)
-	print(name, " base Character init ",get_instance_id() )
+	print(name, " base Character init aquiisda",get_instance_id() )
 	charState = CharState.new(Vector3.ZERO,Vector2.ZERO,Vector3.ZERO,0,0,1)	
-
-
+	print("Pase por aquyi")
+	
 func _ready():
 	set_physics_process(false) # starts here because is the first moment when is connected to Physics server
 	print(name, " base Character ready ",get_instance_id() )
 	hookFunctionalities = load("res://characters/functionalities/Hook.gd").new()
 	print("hookLoaded")
 	hookFunctionalities.addChilds(get_parent())
-	charState.position = translation
-	
-func hook():
-	hookFunctionalities.hook(rayCast,translation)
+	charState.position = position
+	set_floor_stop_on_slope_enabled(false)
+	set_floor_snap_length(0.0)
 
+
+
+
+
+#::::::::::::::::::::::::::::::::::::::::::::::::Hook::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+var hookFunctionalities : Hook 	
+func hook():
+	hookFunctionalities.hook(rayCast3D,position)
+#:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 func changeHookLength(length: float):
 	hookFunctionalities.changeLength(length)
 
@@ -187,7 +200,7 @@ func fallingAndFriction(delta): #Verifies if it is falling in that case add velo
 
 
 func friction(delta) -> Vector3 :
-	var relativeVel = charState.velocity - get_floor_velocity() 
+	var relativeVel = charState.velocity - get_platform_velocity() 
 	#print("the floors go %f %f %f " %[get_floor_velocity().x, get_floor_velocity().y, get_floor_velocity().z] )
 	var friction : Vector3= -relativeVel.slide(normal)
 	if friction.length() >  WorldProperties.mu * delta: #The first part is to know the parallalel component of the velocity with the "floor" negative toDO in the future add multiples mu, deppending on the material
@@ -198,13 +211,13 @@ func friction(delta) -> Vector3 :
 #::::::::Movement:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 func running(direction : Vector3,delta): #With a given direction(not necessary normalized) it considere if it's falling or not and make an interpolation and change the walk velocity value 
-	var velocity = get_floor_velocity()
+	var velocity = get_platform_velocity()
 	if not isFalling:
 		direction = direction.slide(normal)
 		if  ( velocity - charState.velocity ).dot(direction) < maxRunningSpeed :
-			charState.walk =  charState.walk.linear_interpolate(direction * runningspeed ,  delta * 5) 
+			charState.walk =  charState.walk.lerp(direction * runningspeed ,  delta * 5) 
 	else:
-		charState.walk =  charState.walk.linear_interpolate(direction * runningspeed*.3 ,  delta * 30)	
+		charState.walk =  charState.walk.lerp(direction * runningspeed*.3 ,  delta * 30)	
 
 
 func jump(): #Add velocity to jump , add the previus walk speed to velocity, assign zero to walk and initialize the animation of jumpiing of the animation controller
@@ -237,18 +250,19 @@ func shot(): #for now it just initialize the animation in animation controller
 
 func baseCharPhysics(delta): #simulates velocity, it has to be calculated only by the server and the player for his character
 	#toDo maybe use a thread
-	charState.velocity = ( translation - charState.walk *delta - charState.position  )/delta
-	charState.position = translation
+	charState.velocity = ( position - charState.walk *delta - charState.position  )/delta
+	charState.position = position
 
 	fallingAndFriction(delta)
-	charState.velocity += hookFunctionalities.hookVelocityModifier(translation)
+	charState.velocity += hookFunctionalities.hookVelocityModifier(position)
 	jump()
 	# Lo de restarle la velocidad del piso lo hago porque sino es dificil el manejo de la friccion
 
 	
 func _physics_process(delta):
 	#print(name, " base Character _physics_process ",get_instance_id() )
-	move_and_slide( charState.velocity + charState.walk - get_floor_velocity() ,Vector3.UP)
+	velocity = charState.velocity + charState.walk - get_platform_velocity()
+	move_and_slide()
 	animationController.movementSpeed(charState.walk) #Where i send it it knows its global rotation
-	hookFunctionalities.render(translation)
+	hookFunctionalities.render(position)
 

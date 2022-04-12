@@ -1,23 +1,20 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=3 format=3 uid="uid://lcqelis5c44l"]
 
-[ext_resource path="res://scenes/LAN/jugadores.tscn" type="PackedScene" id=1]
-[ext_resource path="res://scenes/LAN/myPlayer.gd" type="Script" id=2]
+[ext_resource type="PackedScene" uid="uid://edk3r1cr3wb1" path="res://scenes/LAN/jugadores.tscn" id="1"]
+[ext_resource type="Script" path="res://scenes/LAN/myPlayer.gd" id="2"]
 
-[node name="Control" instance=ExtResource( 1 )]
-script = ExtResource( 2 )
+[node name="Control" instance=ExtResource( "1" )]
+script = ExtResource( "2" )
 
 [node name="PlayerName" type="Button" parent="Panel" index="0"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -61.5
-margin_top = -21.5
-margin_right = 61.5
-margin_bottom = 21.5
 text = "Player Name"
 clip_text = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
 [connection signal="pressed" from="Panel/PlayerName" to="." method="changePlayerName"]

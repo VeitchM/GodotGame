@@ -5,10 +5,10 @@ const HOST : int = 1
 var estadoMenu : int = HOST
 var playerID : int = HOST
 var playersCount : int = HOST
-onready var selfPath = self.get_path()
+@onready var selfPath = self.get_path()
 
-onready var hostJoin = get_node("HostJoin")
-onready var buscar = get_node("Buscar")
+@onready var hostJoin = get_node("HostJoin")
+@onready var buscar = get_node("Buscar")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

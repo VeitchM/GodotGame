@@ -1,29 +1,27 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=5 format=3 uid="uid://dj2ivgo6jlxld"]
 
-[ext_resource path="res://characters/baseCharacter/baseCharacter.tscn" type="PackedScene" id=1]
-[ext_resource path="res://characters/player/PlayerCharacter.gd" type="Script" id=2]
-[ext_resource path="res://characters/player/PlayerPov.tscn" type="PackedScene" id=3]
-[ext_resource path="res://characters/CollisionShape.tscn" type="PackedScene" id=4]
+[ext_resource type="PackedScene" path="res://characters/baseCharacter/baseCharacter.tscn" id="1"]
+[ext_resource type="Script" path="res://characters/player/PlayerCharacter.gd" id="2"]
+[ext_resource type="PackedScene" uid="uid://cq8vx00bawbac" path="res://characters/player/PlayerPov.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://characters/CollisionShape.tscn" id="4"]
 
-[node name="PlayerCharacter" instance=ExtResource( 1 )]
-script = ExtResource( 2 )
+[node name="PlayerCharacter" instance=ExtResource( "1" )]
+script = ExtResource( "2" )
 
 [node name="LookPivot" parent="." index="0"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0 )
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 
-[node name="RayCast" parent="LookPivot" index="0"]
-transform = Transform( -1, 0, -3.25841e-07, 0, 0.778622, 0, 3.25841e-07, 0, -1, 0, 0, 0 )
-enabled = true
-cast_to = Vector3( 0, 0, -200 )
+[node name="RayCast3D" parent="LookPivot" index="0"]
+transform = Transform3D(-1, 0, -3.25841e-07, 0, 0.778622, 0, 3.25841e-07, 0, -1, 0, 0, 0)
 collide_with_areas = true
 
-[node name="Camera" type="Camera" parent="LookPivot" index="1"]
-transform = Transform( -1, 0, -3.89414e-07, 0, 1, 0, 3.89414e-07, 0, -1, 0, 0, 0 )
+[node name="Camera" type="Camera3D" parent="LookPivot" index="1"]
+transform = Transform3D(-1, 0, -3.89414e-07, 0, 1, 0, 3.89414e-07, 0, -1, 0, 0, 0)
 current = true
 fov = 60.0
 far = 800.0
 
-[node name="POV" parent="LookPivot" index="2" instance=ExtResource( 3 )]
-transform = Transform( 1, 0, 7.15255e-07, 0, 1, 0, -7.15255e-07, 0, 1, 0, -0.090043, 0 )
+[node name="POV" parent="LookPivot" index="2" instance=ExtResource( "3" )]
+transform = Transform3D(1, 0, 7.15255e-07, 0, 1, 0, -7.15255e-07, 0, 1, 0, -0.090043, 0)
 
-[node name="CollisionShape" parent="." index="1" instance=ExtResource( 4 )]
+[node name="CollisionShape" parent="." index="1" instance=ExtResource( "4" )]

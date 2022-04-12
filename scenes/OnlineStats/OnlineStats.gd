@@ -1,6 +1,6 @@
 extends Control
 
-onready var players = $Players
+@onready var players = $Players
 func _ready():
 	
 	pass
@@ -8,7 +8,7 @@ func _ready():
 func start(): #it adds all the players and get the ping of each one
 	print("Started Online Stats")
 	var loaded = load("res://scenes/OnlineStats/StatsInGamePlayerInfo.tscn")
-	var playerInfoStatsNode = loaded.instance()
+	var playerInfoStatsNode = loaded.instantiate()
 	playerInfoStatsNode.initialize(OnlineModule.actualPlayerInfo.id)
 	if (playerInfoStatsNode == null):
 		print("isNull")
@@ -16,7 +16,7 @@ func start(): #it adds all the players and get the ping of each one
 		print("notNull")
 	players.add_child(playerInfoStatsNode)
 	for player in OnlineModule.playersInfo.values():
-		playerInfoStatsNode = loaded.instance()
+		playerInfoStatsNode = loaded.instantiate()
 		playerInfoStatsNode.initialize(player.id)
 		if (playerInfoStatsNode == null):
 			print("isNull")

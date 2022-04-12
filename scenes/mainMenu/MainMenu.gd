@@ -6,15 +6,15 @@ var  MainButtonsMenu = 0
 var  PlayMenu = 1
 var  SettingsMenu = 2
 # var b = "text"
-onready var playMenu = get_node("PlayMenu")
-onready var menuLAN = get_node("Menu LAN")
-onready var mainButtonsMenu = get_node("MainButtonsMenu")
-onready var menuLan = get_node("MenuLan")
-onready var hostJoin = get_node("MenuLan/HostJoin")
+@onready var playMenu = get_node("PlayMenu")
+@onready var menuLAN = get_node("Menu LAN")
+@onready var mainButtonsMenu = get_node("MainButtonsMenu")
+@onready var menuLan = get_node("MenuLan")
+@onready var hostJoin = get_node("MenuLan/HostJoin")
 
 func _ready():
-	OnlineModule.connect("disconnected",self,"_disconnected")
-	LevelsManager.connect("startLevel",self,"_startLevel")	
+	OnlineModule.sDisconnected.connect(self._disconnected)
+	LevelsManager.sStartLevel.connect(self._startLevel)	
 
 func _startLevel():
 	hide()

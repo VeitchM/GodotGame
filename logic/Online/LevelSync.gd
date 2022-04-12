@@ -10,7 +10,8 @@ func ready(): #add to the own list the status of the current player as loaded an
 	rpc("addReadyHostJoin",OnlineModule.actualPlayerInfo.id)
 	OnlineModule.actualPlayerInfo.ready= true
 
-remote func addReadyHostJoin(id):
+@rpc
+func addReadyHostJoin(id):
 	addReadyPlayer(id)
 	tryToLoadLevel()	
 
@@ -51,7 +52,8 @@ func levelLoaded(): #set status ready as true and try to start level
 	rpc("addReadyLevelLoaded",OnlineModule.actualPlayerInfo.id)
 	tryToStartLevel()#has to be synced toDO maybe verify from the last that has been ready and send rpc
 
-remote func addReadyLevelLoaded(id): #Executed when other player has loaded the map
+@rpc
+func addReadyLevelLoaded(id): #Executed when other player has loaded the map
 	addReadyPlayer(id)
 	print("From remote")
 	tryToStartLevel()

@@ -9,17 +9,19 @@ var  jumpForce :float= 0
 var dataByServer
 var serverCorrectionInfo
 ##################################ServerOnly################################################
-onready var repository : Dictionary = LevelsManager.onlineSyncs.playersDataToClient
+@onready var repository : Dictionary = LevelsManager.onlineSyncs.playersDataToClient
 ###########################################################################################
 
 
 signal newPlayersData
 
 func _init():
+	super._init()
 	print(name, " Player init ",get_instance_id() )#if not used the physic process starts before all is on place
 	# set_physics_process(false)
 func _ready():
 	#set_physics_process(false)
+	super._ready()
 	print(name, " Player ready ",get_instance_id() )
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	animationController = $LookPivot/POV
@@ -86,10 +88,10 @@ func _physics_process(delta):
 	hookControls()
 	if OnlineModule.isServer:
 		LevelsManager.onlineSyncs.playersDataToClient[id] = infoToClient()
-	else:
-		OnlineModule.sendPlayerInfoInGame(infoToServer())
+	#else:
+		#OnlineModule.sendPlayerInfoInGame(infoToServer())
 	charState.action = 0
-
+	super._physics_process(delta)
 	
 func hookControls():
 	if Input.is_action_pressed("retractHook"):
@@ -104,5 +106,5 @@ func get_input_direction() -> Vector3:
 	var x: float = Input.get_action_strength("left") - Input.get_action_strength("right")
 	if Input.get_action_strength("ui_cancel") >0.4:
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)#trying to free the mouse
-	return transform.basis.xform(Vector3(x,0,z).normalized())
+	return transform.basis * Vector3(x,0,z).normalized()
 	

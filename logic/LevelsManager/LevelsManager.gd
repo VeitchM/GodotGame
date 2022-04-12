@@ -6,7 +6,7 @@ const STATSINGAME : int = 1
 const MENUINGAME : int = 2
 const ACTUALSCENE : int = 3
 var levelStarted : bool = false
-signal startLevel
+signal sStartLevel
 
 var statsInGame 
 var menuInGame  
@@ -19,14 +19,14 @@ func _ready():
 
 func loaderThreaded(path : String, ObjectToLoad : int): #load in a thread, and put in the tree toDo more generic couldnt be called from any object and the objects decides be its own method where to assign it
 	var loader = Thread.new()
-	loader.start(self,"loaderForThread",[loader,path,ObjectToLoad])
+	loader.start(loaderForThread,[loader,path,ObjectToLoad])
 	#loaderForThread([loader,path,ObjectToLoad])
 
 func loaderForThread(vector):#Method intended to be call from a thread injection Danger
 	var ownThread :Thread = vector[0]
 	var path :String = vector[1]
 	var LOADEDOBJECT : int = vector[2]
-	var scene = load(path).instance()
+	var scene = load(path).instantiate()
 	if LOADEDOBJECT == STATSINGAME:
 		statsInGame = scene
 		call_deferred("add_child",scene)
@@ -51,7 +51,7 @@ func loaderForThread(vector):#Method intended to be call from a thread injection
 
 func startLevel(): #Put in the tree the actualScene, toDo verify to be idempotent
 	print("startLevel")
-	emit_signal("startLevel")
+	emit_signal("sStartLevel")
 	statsInGame.start()
 	call_deferred("add_child",actualScene)
 

@@ -1,7 +1,7 @@
 extends Node
 
 #este nodo enviara mensajes a los demas jugadores de que esta hosteando una partida
-export (float) var BROADCAST_INTERVAL = 1.0
+@export var  BROADCAST_INTERVAL : float = 1.0
 
 var serverInfo = {"name" : "LAN Game" }
 var socketUDP
@@ -13,9 +13,9 @@ func _enter_tree():
 	broadcastTimer.one_shot = false
 	broadcastTimer.autostart = true
 	
-	if get_tree().is_network_server(): #no entiendo esta verificacion
+	if is_multiplayer_authority(): #no entiendo esta verificacion
 		add_child(broadcastTimer)
-		broadcastTimer.connect("timeout",self,"broadcast")
+		broadcastTimer.timeout.connect(self.broadcast)
 		
 		socketUDP = PacketPeerUDP.new()
 		socketUDP.set_broadcast_enabled(true)
@@ -23,7 +23,8 @@ func _enter_tree():
 
 func broadcast():
 	serverInfo.name = OnlineModule.serverName
-	var packetMessage = to_json(serverInfo).to_ascii()#no se si es necesario
+	var json = JSON.new()
+	var packetMessage = json.stringify(serverInfo)#.to_ascii()#no se si es necesario
 	socketUDP.put_packet(packetMessage)
 	#print(serverInfo)
 	#print(parse_json( packetMessage.get_string_from_ascii()) )

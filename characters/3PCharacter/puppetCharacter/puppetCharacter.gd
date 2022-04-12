@@ -1,7 +1,7 @@
 extends TPCharacter
 class_name puppetCharacter #Used by the client
 
-onready var repository : Dictionary = LevelsManager.onlineSyncs.playersDataToClient
+@onready var repository : Dictionary = LevelsManager.onlineSyncs.playersDataToClient
 
 
 func _ready():

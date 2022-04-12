@@ -1,7 +1,7 @@
 extends TPCharacter
 class_name SlaveCharacter
 
-onready var repository : Dictionary = LevelsManager.onlineSyncs.playersDataToClient
+@onready var repository : Dictionary = LevelsManager.onlineSyncs.playersDataToClient
 var mutexOrders: Mutex = Mutex.new()
 var order : Array = []
 

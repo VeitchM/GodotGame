@@ -6,16 +6,16 @@ var playersDataToClient : Dictionary# of type CharacterToClient
 var sortedCharKeys : Array 
 var threadSender : bool = true
 var thread : Thread
-var sentTime : float = 0.125
+var sentTime : float = 10000 #change if there are players
 #::For Both:::::::::::::
 var puppets : Dictionary 
-var level : Spatial 
+var level : Node3D 
 var playerChar : PlayerCharacter 
 
 func initialize(scene):#same for client and server, it puts players in its places
 	level = scene
 	print("Initialize OnlineSyncs")
-	playerChar = load("res://characters/player/PlayerCharacter.tscn").instance()
+	playerChar = load("res://characters/player/PlayerCharacter.tscn").instantiate()
 	playerChar.id = OnlineModule.actualPlayerInfo.id
 	var puppetScript 
 	if OnlineModule.isServer:
@@ -27,7 +27,7 @@ func initialize(scene):#same for client and server, it puts players in its place
 #Adds the characters in the world, i dont know where
 	scene.call_deferred("add_child",playerChar)
 	for player in OnlineModule.playersInfo.values():
-		puppetChar = puppetScript.instance() #toDo maybe i should put a factory here
+		puppetChar = puppetScript.instantiate() #toDo maybe i should put a factory here
 		puppetChar.id = player.id
 		scene.call_deferred("add_child", puppetChar)
 		if OnlineModule.isServer:
@@ -50,12 +50,12 @@ func initialize(scene):#same for client and server, it puts players in its place
 			if key == OnlineModule.actualPlayerInfo.id:
 				charac =  playerChar
 		if !charac == null:
-			charac.translation = scene.playerSpawns[i]
+			charac.position = scene.playerSpawns[i]
 			i+=1
 		else:
 			print("Player key not found to relocate")
 	thread  = Thread.new()
-	thread.start(self, "threadSendInfoToClient")
+	thread.start(self.threadSendInfoToClient)
 	
 #::For Server::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -68,7 +68,7 @@ func receivedInfoFromPlayer(player : BaseCharacter.CharacterForServer ):
 func threadSendInfoToClient(_a):
 	print("ThreadSendInfo")
 	while threadSender:
-		yield(LevelsManager.get_tree().create_timer(sentTime), "timeout")
+		await LevelsManager.get_tree().create_timer(sentTime).timeout
 		sendInfoToClient()
 		
 	thread.call_deferred("wait_to_finish")
@@ -79,13 +79,13 @@ func sendInfoToClient():
 	#var aux = []
 	#for player in playersDataToClient.values(): #is it necessary ?
 	#	aux.append_array(player)
-	var data = [OS.get_ticks_msec()]
+	var data = [Time.get_ticks_msec()]
 	#data.append_array(aux)	
 	data.append(playersDataToClient.values())
 	debugData =  data
 
 	
 	OnlineModule.rpc("receiveInfoToClient",data)
-	print("InfoOfPlayerSended")
+	print("InfoToPlayerSended")
 
 

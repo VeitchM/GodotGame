@@ -18,7 +18,7 @@ class Player:
 		
 
 	
-var network = NetworkedMultiplayerENet.new()
+var network = ENetMultiplayerPeer.new()
 const CLIENTPORT : int = 1997 
 const SERVERPORT : int = 1961
 const MAXPLAYER :int = 64
@@ -30,16 +30,16 @@ var serverName : String = "Jorge"
 var playersInfo : Dictionary = {} 
 var matchInfo 
 
-onready var levelSync = load("res://logic/Online/LevelSync.gd").new()
+@onready var levelSync = load("res://logic/Online/LevelSync.gd").new()
 
-signal addChatMessage
+signal sAddChatMessage
 # warning-ignore:unused_signal
-signal addPlayerInfo
-signal removePlayer
-signal disconnected
+signal sAddPlayerInfo
+signal sRemovePlayer
+signal sDisconnected
 # warning-ignore:unused_signal
-signal refreshPlayerInfo
-signal refreshServerInfo
+signal sRefreshPlayerInfo
+signal sRefreshServerInfo
 
 #toDO server se cae
 
@@ -65,13 +65,13 @@ func host() -> int: #Start the host systems, if fails it returns 1
 		print("Server failed to start")
 		return 1
 	else:
-		get_tree().set_network_peer(network)
+		get_tree().multiplayer = network
 		print("Server started succesfully")
 		isServer = true
 		actualPlayerInfo.id = network.get_unique_id()
-		network.connect("peer_connected",self,"_peer_connected")
-		network.connect("peer_disconnected",self,"_peer_disconnected")
-		add_child(   load  (Repository.Rutes["ServerAdvertiser"]).instance())
+		network.peer_connected.connect(self._peer_connected)
+		network.peer_disconnected.connect(self._peer_disconnected)
+		add_child(   load(Repository.Rutes["ServerAdvertiser"]).instantiate())
 		return 0
 	
 	#playersInfo[actualPlayerInfo.id] = actualPlayerInfo #it's better to have it appart
@@ -79,16 +79,16 @@ func host() -> int: #Start the host systems, if fails it returns 1
 
 func searchServers():
 	print(Repository.Rutes["ServerListener"])
-	add_child ( load(Repository.Rutes["ServerListener"]).instance() )
+	add_child ( load(Repository.Rutes["ServerListener"]).instantiate() )
 	print("Server listened added to tree")
 	
 
 func connectToHost( ip ):
 		network.create_client(ip, SERVERPORT)
 		get_tree().set_network_peer(network)
-		network.connect("connection_failed",self,"_connection_failed")	
-		network.connect("connection_succeeded",self,"_connection_succeeded")
-		network.connect("server_disconnected",self,"_server_disconnected")
+		network.connection_failed.connect(self._connection_failed)	
+		network.connection_succeeded.connect(self._connection_succeeded)
+		network.server_disconnected.connect(self._server_disconnected)
 		actualPlayerInfo.id= network.get_unique_id()
 
 func _connection_failed():
@@ -100,16 +100,17 @@ func _connection_succeeded():
 
 
 func sendPlayerInfo(id):
-	rpc_id(id,"addPlayerInfo",actualPlayerInfo.sendFormat())
+	rpc_id(id,"addsPlayerInfo",actualPlayerInfo.sendFormat())
 	print("quize enviar Playerinfo")
 
-remote func addPlayerInfo(player): #imperative remote function to add a player 
+@rpc 
+func addPlayerInfo(player): #imperative remote function to add a player 
 	var signalv
 	var playerInfo = Player.loadSendFormat(player)	
 	if playersInfo.has(playerInfo.id):
-		signalv ="refreshPlayerInfo"
+		signalv ="sRefreshPlayerInfo"
 	else:	
-		signalv= "addPlayerInfo"
+		signalv= "sAddPlayerInfo"
 	print(playerInfo.id, playerInfo)
 	
 	playersInfo[playerInfo.id] = playerInfo 
@@ -138,7 +139,8 @@ func mostrarPlayersInfo(playersDict):
 	for player in playersDict.values():
 		print(player.id," ",player.playerName )
 	
-remote func refreshServerInfo(serverInfo):# toDO Solo cliente, se llama cuando conecta al hostlobby
+@rpc
+func refreshServerInfo(serverInfo):# toDO Solo cliente, se llama cuando conecta al hostlobby
 	playersInfo = {}
 	var loadedPlayer : Player
 	for player in serverInfo.playersInfo:
@@ -151,7 +153,7 @@ remote func refreshServerInfo(serverInfo):# toDO Solo cliente, se llama cuando c
 	mostrarPlayersInfo(playersInfo) #debug	
 	serverName = serverInfo.serverName
 	matchInfo = serverInfo.matchInfo
-	emit_signal("refreshServerInfo")
+	emit_signal("sRefreshServerInfo")
 	sendPlayerInfo(network.TARGET_PEER_BROADCAST)
 
 
@@ -164,7 +166,8 @@ func _peer_disconnected(id): #servidor
 	erasePlayer(id)
 	rpc("erasePlayer",id)
 
-remote func erasePlayer(id):
+@rpc
+func erasePlayer(id):
 	if !playersInfo.erase(id):
 		print("OnlineModule: playersInfo hasn't erased correctly")
 	emit_signal("removePlayer",id)
@@ -179,9 +182,10 @@ func sendChatMessage(target, message):
 	if target == "everybody":
 		rpc("addChatMessage",message) #I should use something to do groups like rpc_id(peer_id,method,parameter)
 		
-remote func addChatMessage(message):
+@rpc
+func addChatMessage(message):
 		print("Se Recibio el mensaje: %s \nDesde el peer con id: %s" %[message.id,message.text])
-		emit_signal("addChatMessage",message)
+		emit_signal("sAddChatMessage",message)
 		
 		
 func joinServer(gameInfo):
@@ -227,18 +231,19 @@ func _changePlayerName(newPlayerName):
 #the servers sends it's time each time it answer the client
 
 
-remote func receiveAnswerPing(info):
+@rpc
+func receiveAnswerPing(info):
 	#info[0] : id, info[1] : time
-	getPlayer(info[0]).ping =  OS.get_ticks_msec() - info[1]
+	getPlayer(info[0]).ping =  Time.get_ticks_msec() - info[1]
 
 var deltaServerTime : int = 0
 
 func correctServerTime(time : int):
 	#deltaServerTime = 0.1 * ( (time - OS.get_ticks_msec) - deltaServerTime) #toDo think about kind of linear interpolation, but is int
-	deltaServerTime = time - OS.get_ticks_msec()
+	deltaServerTime = time - Time.get_ticks_msec()
 
 func getServerTime() -> int : #Time in the server corrected by ping
-	return OS.get_ticks_msec() + deltaServerTime -actualPlayerInfo.ping
+	return Time.get_ticks_msec() + deltaServerTime -actualPlayerInfo.ping
 	
 #::::::::Shooter Module::::::::::::::::::::::::::::::::::::::::::::::::::::::::	
 #::::::::::::::::::::::::InGame Functionalities:::::::::::::::::::::::::::::::::::::::
@@ -247,13 +252,16 @@ func sendPlayerInfoInGame(playerInfo : Array): # send self
 	if actualPlayerInfo.id != 1:# if not the server
 		rpc_id(1, "receivePlayerInfoInGameServer",playerInfo) #should it be reliable toThink 
 
-remote func receivePlayerInfoInGameServer(infoToServer):#method used by server to receive the information from the players
+
+@rpc
+func receivePlayerInfoInGameServer(infoToServer):#method used by server to receive the information from the players
 	#toDo make it a thread
 	#print("receivedInfoFromPlayer")
 	LevelsManager.onlineSyncs.receivedInfoFromPlayer(BaseCharacter.CharacterForServer.getInfoToServer(infoToServer))
 
 var debugData
-remote func receiveInfoToClient(data): #Message from server to clients with the processed data of all players
+@rpc
+func receiveInfoToClient(data): #Message from server to clients with the processed data of all players
 		debugData =data
 		rpc("receiveAnswerPing",[actualPlayerInfo.id,data[0]])
 		correctServerTime(data[0])

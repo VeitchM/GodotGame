@@ -1,4 +1,4 @@
-[gd_resource type="SpatialMaterial" load_steps=2 format=2]
+[gd_resource type="Node3DMaterial" load_steps=2 format=2]
 
 [ext_resource path="res://scenes/Debugger/CheckerTexture.png" type="Texture" id=1]
 

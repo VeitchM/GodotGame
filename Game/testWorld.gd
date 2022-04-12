@@ -1,7 +1,7 @@
-extends Spatial
+extends Node3D
 
 
-onready var plataforma : RigidBody= $Plataforma
+@onready var plataforma : AnimatableBody3D = $Plataforma
 var time = 0.0
 
 var playerSpawns = Array([Vector3(0,10,0),Vector3(0,10,10),Vector3(10,10,0),Vector3(10,10,10),Vector3(0,10,20)]) #maybe use resize to reserve memory and make an algorith to assign the points
@@ -13,4 +13,4 @@ func _ready():
 
 func _physics_process(delta): # maybe a threat
 	time = OnlineModule.getServerTime() - OnlineModule.actualPlayerInfo.ping # I choose this so the server simulates the same as the player with itself
-	plataforma.translation.x =  sin( time/800.0) *10.0
+	plataforma.position.x =  sin( time/800.0) *10.0

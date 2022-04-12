@@ -1,7 +1,7 @@
-extends Spatial
+extends Node3D
 
 
-onready var animationTree = $AnimationTree
+@onready var animationTree = $AnimationTree
 
 
 # Called when the node enters the scene tree for the first time.

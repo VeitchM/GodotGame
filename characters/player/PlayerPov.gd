@@ -1,8 +1,8 @@
-extends Spatial
+extends Node3D
 class_name PlayerPov
 
-onready var handsAnimationTree = $riggedHandAcceptable/AnimationTree
-onready var weaponAnimationTree =$riggedHandAcceptable/Armature/Skeleton/BoneAttachment/riggedRevolverAcceptable/AnimationTree
+@onready var handsAnimationTree = $riggedHandAcceptable/AnimationTree
+@onready var weaponAnimationTree =$riggedHandAcceptable/Armature/Skeleton3D/BoneAttachment3D/riggedRevolverAcceptable/AnimationTree
 
 
 # Called when the node enters the scene tree for the first time.

@@ -6,3 +6,5 @@
 /.import
 /.vscode
 *.material
+*.gltf*
+*.cfg

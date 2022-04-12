@@ -1,2 +1,11 @@
 29/3
 Comenzando a pensar en los tiempos de procesado y envio de mensajes entre servidor cliente
+10/4
+Pase a un repositorio Git todo el proyecto creando el git ignore
+Cree un par de diagramas, de clase y de secuencia de la comunicacion con el servidor del objeto personaje del jugador
+5horas
+11/4
+Descargue un modelo de soldado de blender, hice la mitad del armature para las piernas, ya tenia los brazos animados del arma, por lo que extendi ese mismo
+Utilize decimate en el revolver para eliminar el 60% de los vertices y con el modelo descargado tambien, en cada objeto que lo componia en niveles distintos y luego fucione
+Pase a godot 4 y empeze a resolver el codigo para hacerlo compatible
+4horas

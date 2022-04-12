@@ -2,7 +2,7 @@ class_name Hook
 
 var isHooked : bool = false
 var hookPoint : Vector3 = Vector3(0,0,0) # #It sets the local position of the hook in the hooked object
-var hookedObject : Spatial
+var hookedObject : Node3D
 var cableLength : float = 0
 var distance: Vector3
 var force : Vector3
@@ -23,18 +23,18 @@ func _init():
 	print("Hook Init id ", get_instance_id())
 
 func addChilds(object : Node):
-	rope = load("res://characters/functionalities/rope.tscn").instance()
+	rope = load("res://characters/functionalities/rope.tscn").instantiate()
 	object.call_deferred("add_child",rope)
 
-func hook(rayCast : RayCast, position : Vector3):#It sets the local position of the hook in the hooked object and sets hook = true
+func hook(rayCast3D : RayCast3D, position : Vector3):#It sets the local position of the hook in the hooked object and sets hook = true
 	if isHooked == true:
 		unHook()
 	else:
-		hookedObject = rayCast.get_collider()
+		hookedObject = rayCast3D.get_collider()
 		if !!hookedObject:
 			isHooked = true
-			hookPoint = rayCast.get_collision_point() - hookedObject.translation #It sets the local position of the hook in the hooked object
-			cableLength = (position-rayCast.get_collision_point()).length()
+			hookPoint = rayCast3D.get_collision_point() - hookedObject.position #It sets the local position of the hook in the hooked object
+			cableLength = (position-rayCast3D.get_collision_point()).length()
 			#debugger()
 		else:
 			isHooked = false
@@ -55,7 +55,7 @@ func render(position):
 
 func hookVelocityModifier(position: Vector3) -> Vector3:  #it will modify the given charState if it's hooked
 	if isHooked:
-		rope.add(hookPoint + hookedObject.translation)
+		rope.add(hookPoint + hookedObject.position)
 		distance = rope.objective  - position
 		aux= distance.length()
 		if aux >= cableLength:
@@ -73,10 +73,10 @@ func hookVelocityModifier(position: Vector3) -> Vector3:  #it will modify the gi
 func distributeInfluence(vectors3 ): #calculate a new value
 	pass
 func debugger():
-	print("Is hooked to "+hookedObject.name)
-	print("Translation of Object "+String(hookedObject.translation))
-	var sphere = preload("res://scenes/Debugger/debuggerSphere.tscn").instance()
+	print("Is hooked to " ,hookedObject.name)
+	print("position of Object ",hookedObject.position)
+	var sphere = preload("res://scenes/Debugger/debuggerSphere.tscn").instantiate()
 	hookedObject.get_parent().call_deferred("add_child",sphere)
-	sphere.translation = hookPoint + hookedObject.translation
+	sphere.position = hookPoint + hookedObject.position
 
 

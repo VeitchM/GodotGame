@@ -1,0 +1,21 @@
+res://Game/testWorld.tscn
+res://characters/3PCharacter/puppetCharacter/puppetCharacter.gd
+res://characters/3PCharacter/slave/slaveCharacter.gd
+res://characters/baseCharacter/baseCharacter.gd
+res://characters/player/PlayerCharacter.gd
+res://characters/player/PlayerCharacter.tscn
+res://characters/player/PlayerPov.tscn
+res://characters/player/models/riggedHandAcceptable.tscn
+res://characters/player/models/riggedRevolverAcceptable.tscn
+res://logic/LevelsManager/OnlineSyncs.gd
+res://logic/Online/OnlineModule.tscn
+res://resources/materials/Checker.tres
+res://resources/materials/CheckerGlobal.tres
+res://scenes/Debugger/Debug Player.tscn
+res://scenes/LAN/HostJoin.tscn
+res://scenes/LAN/OnlineLobby.tscn
+res://scenes/LAN/jugadores.tscn
+res://scenes/LAN/myPlayer.tscn
+res://scenes/OnlineLobby.tscn
+res://scenes/OnlineStats/StatsInGamePlayerInfo.gd
+res://scenes/mainMenu/MainMenu.tscn

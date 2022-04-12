@@ -2,7 +2,7 @@
 
 [sub_resource type="SphereMesh" id=1]
 
-[node name="Sphere" type="Spatial"]
+[node name="Sphere" type="Node3D"]
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
 mesh = SubResource( 1 )

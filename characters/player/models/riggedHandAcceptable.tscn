@@ -1,81 +1,108 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=16 format=3 uid="uid://dp231mpw3ow0c"]
 
-[ext_resource path="res://characters/player/models/riggedHandAcceptable.glb" type="PackedScene" id=1]
-[ext_resource path="res://characters/player/models/riggedHandAcceptable.gd" type="Script" id=2]
-[ext_resource path="res://characters/player/models/riggedRevolverAcceptable.tscn" type="PackedScene" id=3]
+[ext_resource type="PackedScene" uid="uid://pcqil018y6xi" path="res://characters/player/models/riggedHandAcceptable.glb" id="1"]
+[ext_resource type="Script" path="res://characters/player/models/riggedHandAcceptable.gd" id="2"]
+[ext_resource type="PackedScene" uid="uid://dan444t3bwx1n" path="res://characters/player/models/riggedRevolverAcceptable.tscn" id="3"]
 
-[sub_resource type="AnimationNodeAnimation" id=1]
-animation = "ArmRevolverReload"
+[sub_resource type="AnimationNodeAnimation" id="1"]
+animation = &"ArmRevolverReload"
 
-[sub_resource type="AnimationNodeOneShot" id=2]
+[sub_resource type="AnimationNodeOneShot" id="2"]
 fadein_time = 0.2
 fadeout_time = 0.2
 
-[sub_resource type="AnimationNodeOneShot" id=3]
+[sub_resource type="AnimationNodeOneShot" id="3"]
 resource_name = "Shot"
 fadein_time = 0.18
 fadeout_time = 0.16
 sync = true
 
-[sub_resource type="AnimationNodeAnimation" id=4]
-animation = "ArmRevolverShoot"
+[sub_resource type="AnimationNodeAnimation" id="4"]
+animation = &"ArmRevolverShoot"
 
-[sub_resource type="AnimationNodeTimeScale" id=5]
+[sub_resource type="AnimationNodeTimeScale" id="5"]
 
-[sub_resource type="AnimationNodeAnimation" id=6]
-animation = "ArmRevolverIddle-loop"
+[sub_resource type="AnimationNodeAnimation" id="6"]
+animation = &"ArmRevolverIddle"
 
-[sub_resource type="AnimationNodeAnimation" id=7]
-animation = "ArmRevolverSprinting-loop"
+[sub_resource type="AnimationNodeAnimation" id="7"]
+animation = &"ArmRevolverRunning"
 
-[sub_resource type="AnimationNodeAnimation" id=8]
-animation = "ArmRevolverRunning-loop"
+[sub_resource type="AnimationNodeAnimation" id="8"]
+animation = &"ArmRevolverSprinting"
 
-[sub_resource type="AnimationNodeAnimation" id=9]
-animation = "ArmRevolverWalking-loop"
+[sub_resource type="AnimationNodeAnimation" id="9"]
+animation = &"ArmRevolverWalking"
 
-[sub_resource type="GDScript" id=10]
+[sub_resource type="GDScript" id="10"]
 
-[sub_resource type="AnimationNodeBlendSpace1D" id=11]
-blend_point_0/node = SubResource( 6 )
+[sub_resource type="AnimationNodeBlendSpace1D" id="11"]
+blend_point_0/node = SubResource( "6" )
 blend_point_0/pos = -1.0
-blend_point_1/node = SubResource( 7 )
+blend_point_1/node = SubResource( "7" )
 blend_point_1/pos = 0.7
-blend_point_2/node = SubResource( 8 )
+blend_point_2/node = SubResource( "8" )
 blend_point_2/pos = 1.0
-blend_point_3/node = SubResource( 9 )
+blend_point_3/node = SubResource( "9" )
 blend_point_3/pos = 0.0
-script = SubResource( 10 )
+script = SubResource( "10" )
 
-[sub_resource type="AnimationNodeBlendTree" id=12]
-graph_offset = Vector2( 0, 63.5 )
-nodes/Animation/node = SubResource( 1 )
-nodes/Animation/position = Vector2( 580, 340 )
-nodes/Reload/node = SubResource( 2 )
-nodes/Reload/position = Vector2( 900, 100 )
-nodes/Shoot/node = SubResource( 3 )
-nodes/Shoot/position = Vector2( 620, 120 )
-nodes/ShootRevolver/node = SubResource( 4 )
-nodes/ShootRevolver/position = Vector2( -140, 380 )
-nodes/ShootVelocity/node = SubResource( 5 )
-nodes/ShootVelocity/position = Vector2( 300, 260 )
-nodes/Speed/node = SubResource( 11 )
-nodes/Speed/position = Vector2( 300, 0 )
-nodes/output/position = Vector2( 1140, 80 )
-node_connections = [ "output", 0, "Reload", "Reload", 0, "Shoot", "Reload", 1, "Animation", "Shoot", 0, "Speed", "Shoot", 1, "ShootVelocity", "ShootVelocity", 0, "ShootRevolver" ]
+[sub_resource type="AnimationNodeBlendTree" id="12"]
+graph_offset = Vector2(312.498, 103.624)
+nodes/Animation/node = SubResource( "1" )
+nodes/Animation/position = Vector2(580, 340)
+nodes/Reload/node = SubResource( "2" )
+nodes/Reload/position = Vector2(900, 100)
+nodes/Shoot/node = SubResource( "3" )
+nodes/Shoot/position = Vector2(620, 120)
+nodes/ShootRevolver/node = SubResource( "4" )
+nodes/ShootRevolver/position = Vector2(-140, 380)
+nodes/ShootVelocity/node = SubResource( "5" )
+nodes/ShootVelocity/position = Vector2(300, 260)
+nodes/Speed/node = SubResource( "11" )
+nodes/Speed/position = Vector2(300, 0)
+nodes/output/position = Vector2(1140, 80)
+node_connections = [&"output", 0, &"Reload", &"Reload", 0, &"Shoot", &"Reload", 1, &"Animation", &"Shoot", 0, &"Speed", &"Shoot", 1, &"ShootVelocity", &"ShootVelocity", 0, &"ShootRevolver"]
 
-[node name="riggedHandAcceptable" instance=ExtResource( 1 )]
-script = ExtResource( 2 )
+[node name="riggedHandAcceptable" instance=ExtResource( "1" )]
+script = ExtResource( "2" )
 
-[node name="BoneAttachment" type="BoneAttachment" parent="Armature/Skeleton" index="1"]
-transform = Transform( 0.995343, 0.058489, -0.0766222, -0.083349, 0.122846, -0.988918, -0.0484271, 0.9907, 0.127149, -0.326124, -0.149956, 0.532244 )
-bone_name = "wrist_r"
+[node name="Skeleton3D" parent="Armature" index="0"]
+bones/0/rotation = Quaternion(0.154156, 0.434531, 0.816054, 0.348531)
+bones/1/rotation = Quaternion(0.336739, -0.026862, -0.0207972, 0.940985)
+bones/2/rotation = Quaternion(-0.0217179, 0.926783, 0.0192023, -0.374478)
+bones/11/rotation = Quaternion(0.0305869, 0.53688, 0.0230394, 0.842789)
+bones/12/rotation = Quaternion(0.281913, 0.00371119, -0.0278399, 0.959029)
+bones/13/rotation = Quaternion(0.527676, 0.00817263, -0.0211993, 0.849142)
+bones/22/rotation = Quaternion(-0.246157, -0.226488, 0.938261, -0.0881881)
+bones/23/rotation = Quaternion(0.432809, 0.0257127, 0.0267305, 0.900722)
+bones/24/rotation = Quaternion(-0.0071949, 0.96168, 0.0443902, 0.270463)
+bones/25/rotation = Quaternion(0.214469, -0.723933, 0.0867869, 0.649917)
+bones/26/rotation = Quaternion(0.124017, 0.0683423, 0.0186482, 0.989748)
+bones/27/rotation = Quaternion(0.00467667, 0.00825906, 0.0260393, 0.999616)
+bones/29/rotation = Quaternion(0.456577, -0.612976, 0.358696, 0.53585)
+bones/30/rotation = Quaternion(0.0871479, 0.0498648, 0.00948889, 0.994901)
+bones/31/rotation = Quaternion(0.0887308, -0.0672283, -0.00158177, 0.993783)
+bones/32/rotation = Quaternion(-0.282865, 0.681531, -0.21611, -0.639374)
+bones/33/rotation = Quaternion(0.110815, -0.0548241, 0.00447036, 0.992318)
+bones/34/rotation = Quaternion(0.0113285, 0.0632983, -0.00942872, 0.997886)
+bones/35/rotation = Quaternion(0.401284, -0.599639, 0.413117, 0.555642)
+bones/36/rotation = Quaternion(0.0854982, -0.0403075, 0.0160634, 0.995393)
+bones/37/rotation = Quaternion(0.0760859, -0.064892, -0.0311487, 0.9945)
+bones/38/rotation = Quaternion(-0.257561, -0.0981385, 0.27662, 0.920604)
+bones/40/rotation = Quaternion(0.0239362, -0.0354163, -0.0880472, 0.995199)
+bones/41/rotation = Quaternion(0.0635568, 0.0314917, -0.00996309, 0.997431)
 
-[node name="riggedRevolverAcceptable" parent="Armature/Skeleton/BoneAttachment" index="0" instance=ExtResource( 3 )]
-transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, 0 )
+[node name="BoneAttachment3D" type="BoneAttachment3D" parent="Armature/Skeleton3D" index="1"]
+transform = Transform3D(0.995335, 0.0571949, -0.0776798, -0.0840277, 0.118499, -0.989391, -0.0473839, 0.991305, 0.122753, -0.326675, -0.151832, 0.531939)
+bone_name = "wrist.R"
+bone_idx = 2
+
+[node name="riggedRevolverAcceptable" parent="Armature/Skeleton3D/BoneAttachment3D" index="0" instance=ExtResource( "3" )]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0, 0)
 
 [node name="AnimationTree" type="AnimationTree" parent="." index="2"]
-tree_root = SubResource( 12 )
+tree_root = SubResource( "12" )
 anim_player = NodePath("../AnimationPlayer")
 active = true
 parameters/Reload/active = false

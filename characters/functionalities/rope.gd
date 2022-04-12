@@ -1,4 +1,4 @@
-extends Spatial
+extends Node3D
 
 
 
@@ -6,7 +6,7 @@ extends Spatial
 var origin: Vector3
 var objective: Vector3
 var direction : Vector3
-onready var mesh : MeshInstance = $RopeMesh
+@onready var mesh : MeshInstance3D = $RopeMesh
 
 
 
@@ -23,7 +23,7 @@ func render(_origin):
 	if visible:  
 		var length = (objective - _origin).length()
 		mesh.mesh.height =  length
-		mesh.translation.z = -length/2
+		mesh.position.z = -length/2
 		look_at_from_position (_origin, objective, Vector3.UP )
 	
 func take():

@@ -1,25 +1,17 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=3 format=3 uid="uid://bwdlyagsovlxh"]
 
-[ext_resource path="res://scenes/LAN/HostJoin.gd" type="Script" id=1]
-[ext_resource path="res://resources/2d/Fonts/SansSerifTittle.tres" type="DynamicFont" id=2]
-[ext_resource path="res://scenes/LAN/Popup.gd" type="Script" id=3]
+[ext_resource type="Script" path="res://scenes/LAN/HostJoin.gd" id="1"]
+[ext_resource type="Script" path="res://scenes/LAN/Popup.gd" id="3"]
 
 [node name="HostJoin" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 0
-script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+script = ExtResource( "1" )
 
 [node name="NinePatchRect" type="NinePatchRect" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 20.0
-margin_top = 20.0
-margin_right = -20.0
-margin_bottom = -20.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -32,162 +24,162 @@ __meta__ = {
 }
 
 [node name="PanelContainer" type="PanelContainer" parent="NinePatchRect/VBoxContainer"]
-margin_right = 1040.0
-margin_bottom = 100.0
-rect_min_size = Vector2( 0, 100 )
+offset_right = 1024.0
+offset_bottom = 31.0
 
 [node name="ServerName" type="Button" parent="NinePatchRect/VBoxContainer/PanelContainer"]
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 1033.0
-margin_bottom = 93.0
-rect_min_size = Vector2( 300, 0 )
-custom_fonts/font = ExtResource( 2 )
+offset_right = 1024.0
+offset_bottom = 31.0
 text = "Server Name"
-align = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="NinePatchRect/VBoxContainer"]
-margin_top = 104.0
-margin_right = 1040.0
-margin_bottom = 680.0
-rect_min_size = Vector2( 200, 400 )
+offset_top = 35.0
+offset_right = 1024.0
+offset_bottom = 600.0
 size_flags_vertical = 3
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="VBoxContainer" type="VBoxContainer" parent="NinePatchRect/VBoxContainer/HBoxContainer"]
-margin_right = 836.0
-margin_bottom = 576.0
-rect_min_size = Vector2( 500, 500 )
+clip_contents = true
+offset_right = 964.0
+offset_bottom = 565.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="PlayersInfo" type="VBoxContainer" parent="NinePatchRect/VBoxContainer/HBoxContainer/VBoxContainer"]
-margin_right = 836.0
-margin_bottom = 286.0
-rect_min_size = Vector2( 500, 200 )
+minimum_size = Vector2(0, 200)
+offset_right = 964.0
+offset_bottom = 366.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="ChatSystem" type="VBoxContainer" parent="NinePatchRect/VBoxContainer/HBoxContainer/VBoxContainer"]
-margin_top = 290.0
-margin_right = 836.0
-margin_bottom = 576.0
+clip_contents = true
+layout_direction = 2
+offset_top = 370.0
+offset_right = 964.0
+offset_bottom = 565.0
 grow_horizontal = 0
 grow_vertical = 0
 size_flags_horizontal = 3
-size_flags_vertical = 3
-alignment = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Chat" type="RichTextLabel" parent="NinePatchRect/VBoxContainer/HBoxContainer/VBoxContainer/ChatSystem"]
-margin_top = 228.0
-margin_right = 836.0
-margin_bottom = 258.0
+minimum_size = Vector2(0, 160)
+layout_direction = 1
+offset_right = 964.0
+offset_bottom = 160.0
 grow_vertical = 0
-rect_min_size = Vector2( 0, 30 )
-focus_mode = 2
+size_flags_vertical = 8
+size_flags_stretch_ratio = 0.0
+auto_translate = false
 bbcode_enabled = true
-fit_content_height = true
+tab_size = 6
 scroll_following = true
-selection_enabled = true
-override_selected_font_color = true
 
 [node name="ChatInput" type="HBoxContainer" parent="NinePatchRect/VBoxContainer/HBoxContainer/VBoxContainer/ChatSystem"]
-margin_top = 262.0
-margin_right = 836.0
-margin_bottom = 286.0
-rect_min_size = Vector2( 200, 0 )
+offset_top = 164.0
+offset_right = 964.0
+offset_bottom = 195.0
 size_flags_horizontal = 3
 
 [node name="PlayersName" type="Label" parent="NinePatchRect/VBoxContainer/HBoxContainer/VBoxContainer/ChatSystem/ChatInput"]
-margin_top = 5.0
-margin_right = 55.0
-margin_bottom = 19.0
+offset_top = 2.0
+offset_right = 68.0
+offset_bottom = 28.0
 text = "[Player] :"
 
 [node name="chatInput" type="LineEdit" parent="NinePatchRect/VBoxContainer/HBoxContainer/VBoxContainer/ChatSystem/ChatInput"]
-margin_left = 59.0
-margin_right = 209.0
-margin_bottom = 24.0
-rect_min_size = Vector2( 150, 0 )
-align = 3
+offset_left = 72.0
+offset_right = 139.0
+offset_bottom = 31.0
 
 [node name="PanelContainer" type="VBoxContainer" parent="NinePatchRect/VBoxContainer/HBoxContainer"]
-margin_left = 840.0
-margin_right = 1040.0
-margin_bottom = 576.0
-rect_min_size = Vector2( 200, 0 )
+offset_left = 968.0
+offset_right = 1024.0
+offset_bottom = 565.0
 alignment = 2
 
 [node name="ready" type="Button" parent="NinePatchRect/VBoxContainer/HBoxContainer/PanelContainer"]
-margin_top = 506.0
-margin_right = 200.0
-margin_bottom = 576.0
-rect_min_size = Vector2( 0, 70 )
+offset_top = 534.0
+offset_right = 56.0
+offset_bottom = 565.0
 size_flags_horizontal = 3
 size_flags_vertical = 0
 text = "Ready"
 
 [node name="Popup" type="Panel" parent="."]
 light_mask = 2
-anchor_left = -0.000368293
-anchor_right = -0.000368277
-margin_left = 247.398
-margin_top = 264.0
-margin_right = 511.398
-margin_bottom = 344.0
-script = ExtResource( 3 )
+minimum_size = Vector2(200, 100)
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -50.0
+offset_right = 100.0
+offset_bottom = 50.0
+script = ExtResource( "3" )
 __meta__ = {
-"_edit_use_anchors_": false
+"_edit_layout_mode": 1,
+"_edit_use_custom_anchors": true
 }
 
 [node name="NinePatchRect" type="NinePatchRect" parent="Popup"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 10.0
-margin_top = 10.0
-margin_right = -10.0
-margin_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
 __meta__ = {
-"_edit_use_anchors_": false
+"_edit_layout_mode": 1,
+"_edit_use_anchors_": false,
+"_edit_use_custom_anchors": false
 }
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Popup/NinePatchRect"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
 __meta__ = {
-"_edit_use_anchors_": false
+"_edit_layout_mode": 1,
+"_edit_use_custom_anchors": false
 }
 
 [node name="LabelPopUp" type="Label" parent="Popup/NinePatchRect/VBoxContainer"]
-margin_right = 244.0
-margin_bottom = 14.0
+offset_top = 19.0
+offset_right = 200.0
+offset_bottom = 45.0
 text = "Titulo del menu"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Popup/NinePatchRect/VBoxContainer"]
-margin_top = 18.0
-margin_right = 244.0
-margin_bottom = 42.0
+layout_direction = 2
+offset_top = 49.0
+offset_right = 200.0
+offset_bottom = 80.0
+alignment = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="TextField" type="LineEdit" parent="Popup/NinePatchRect/VBoxContainer/HBoxContainer"]
-margin_right = 200.0
-margin_bottom = 24.0
-rect_min_size = Vector2( 200, 0 )
+offset_left = 49.0
+offset_right = 116.0
+offset_bottom = 31.0
 
 [node name="OkButton" type="Button" parent="Popup/NinePatchRect/VBoxContainer/HBoxContainer"]
-margin_left = 204.0
-margin_right = 234.0
-margin_bottom = 24.0
+offset_left = 120.0
+offset_right = 150.0
+offset_bottom = 31.0
 text = "Ok"
+
 [connection signal="pressed" from="NinePatchRect/VBoxContainer/PanelContainer/ServerName" to="." method="_on_ServerName_pressed"]
-[connection signal="text_entered" from="NinePatchRect/VBoxContainer/HBoxContainer/VBoxContainer/ChatSystem/ChatInput/chatInput" to="." method="_on_chatInput_text_entered"]
+[connection signal="text_submitted" from="NinePatchRect/VBoxContainer/HBoxContainer/VBoxContainer/ChatSystem/ChatInput/chatInput" to="." method="_on_chat_input_text_submitted"]
 [connection signal="pressed" from="NinePatchRect/VBoxContainer/HBoxContainer/PanelContainer/ready" to="." method="_on_ready_pressed"]
-[connection signal="text_entered" from="Popup/NinePatchRect/VBoxContainer/HBoxContainer/TextField" to="Popup" method="_on_TextField_text_entered"]
+[connection signal="text_submitted" from="Popup/NinePatchRect/VBoxContainer/HBoxContainer/TextField" to="Popup" method="_on_text_field_text_submitted"]
 [connection signal="pressed" from="Popup/NinePatchRect/VBoxContainer/HBoxContainer/OkButton" to="Popup" method="_on_OkButton_pressed"]

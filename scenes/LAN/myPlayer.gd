@@ -7,7 +7,7 @@ extends "res://scenes/LAN/jugadores.gd"
 
 
 # Called when the node enters the scene tree for the first time.
-signal changePlayerName
+signal sChangePlayerName
 
 func initialize(inputID):
 
@@ -22,4 +22,4 @@ func initialize(inputID):
 
 
 func changePlayerName():
-	emit_signal("changePlayerName")
+	emit_signal("sChangePlayerName")

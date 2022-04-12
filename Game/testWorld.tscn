@@ -1,81 +1,75 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=12 format=3 uid="uid://qk7j2q2ro0uk"]
 
-[ext_resource path="res://Game/testWorld.gd" type="Script" id=3]
-[ext_resource path="res://scenes/Debugger/Checker.tres" type="Material" id=4]
+[ext_resource type="Material" uid="uid://dkn8sk04k12bg" path="res://resources/materials/Checker.tres" id="2_11jah"]
+[ext_resource type="Script" path="res://Game/testWorld.gd" id="3"]
+[ext_resource type="Material" uid="uid://b15ct6n6hkr83" path="res://resources/materials/CheckerGlobal.tres" id="3_tpbvs"]
+[ext_resource type="PrismMesh" uid="uid://crc1nbj8k86uv" path="res://Game/Mesh_.tres" id="4_r5ch8"]
 
-[sub_resource type="CubeMesh" id=3]
+[sub_resource type="BoxMesh" id="3"]
+material = ExtResource( "2_11jah" )
 
-[sub_resource type="ConcavePolygonShape" id=4]
-data = PoolVector3Array( -1, 1, 1, 1, 1, 1, -1, -1, 1, 1, 1, 1, 1, -1, 1, -1, -1, 1, 1, 1, -1, -1, 1, -1, 1, -1, -1, -1, 1, -1, -1, -1, -1, 1, -1, -1, 1, 1, 1, 1, 1, -1, 1, -1, 1, 1, 1, -1, 1, -1, -1, 1, -1, 1, -1, 1, -1, -1, 1, 1, -1, -1, -1, -1, 1, 1, -1, -1, 1, -1, -1, -1, 1, 1, 1, -1, 1, 1, 1, 1, -1, -1, 1, 1, -1, 1, -1, 1, 1, -1, -1, -1, 1, 1, -1, 1, -1, -1, -1, 1, -1, 1, 1, -1, -1, -1, -1, -1 )
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_6x0rw"]
 
-[sub_resource type="PrismMesh" id=5]
+[sub_resource type="BoxShape3D" id="BoxShape3D_hrap8"]
 
-[sub_resource type="ConcavePolygonShape" id=6]
-data = PoolVector3Array( 0, 1, 1, 1, -1, 1, -1, -1, 1, 0, 1, -1, -1, -1, -1, 1, -1, -1, 0, 1, 1, 0, 1, -1, 1, -1, 1, 0, 1, -1, 1, -1, -1, 1, -1, 1, 0, 1, -1, 0, 1, 1, -1, -1, -1, 0, 1, 1, -1, -1, 1, -1, -1, -1, -1, -1, 1, 1, -1, 1, -1, -1, -1, 1, -1, 1, 1, -1, -1, -1, -1, -1 )
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_8dw1s"]
+points = PackedVector3Array(-1, -1, -1, 0.0293034, 0.941393, 0.941393, 0.147043, 0.705915, 0.94122, -1, -1, 1, 1, -1, -1, -0.0293034, 0.941393, -0.941393, 1, -1, 1, -0.0293034, 0.941393, 0.941393, 0.0293034, 0.941393, -0.941393)
 
-[node name="world" type="Spatial"]
-script = ExtResource( 3 )
+[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_ebxe2"]
+rayleigh_coefficient = 1.98
 
-[node name="CSGCombiner" type="CSGCombiner" parent="."]
+[sub_resource type="Sky" id="Sky_aiwke"]
+sky_material = SubResource( "PhysicalSkyMaterial_ebxe2" )
+
+[sub_resource type="Environment" id="Environment_6sor4"]
+background_mode = 2
+sky = SubResource( "Sky_aiwke" )
+ambient_light_source = 3
+ss_reflections_enabled = true
+ssao_enabled = true
+
+[node name="world" type="Node3D"]
+script = ExtResource( "3" )
+
+[node name="CSGCombiner" type="CSGCombiner3D" parent="."]
 use_collision = true
 
-[node name="Piso" type="CSGBox" parent="CSGCombiner"]
-transform = Transform( 17.5324, 0, 0, 0, 1, 0, 0, 0, 10.8025, -40.1044, -0.580637, -17.024 )
-material = ExtResource( 4 )
+[node name="Piso" type="CSGBox3D" parent="CSGCombiner"]
+transform = Transform3D(397.71, 0, 0, 0, 1, 0, 0, 0, 259.107, -44.9508, -13.3678, -25.1356)
+material_override = ExtResource( "2_11jah" )
+material = ExtResource( "3_tpbvs" )
 
-[node name="Piso2" type="CSGBox" parent="CSGCombiner"]
-transform = Transform( -213.545, 0, 0, 0, 1, 0, 0, 0, -131.574, 59.8956, -10.5806, 40.976 )
-material = ExtResource( 4 )
+[node name="Suelo3" type="StaticBody3D" parent="."]
+transform = Transform3D(47.6809, 0, 0, 0, 0.314286, 0, 0, 0, 47.6809, 5.30926, 3.14979, 13.8314)
 
-[node name="Poste" type="CSGBox" parent="CSGCombiner"]
-transform = Transform( 5.20885, 0, 0, 0, 134.1, 0, 0, 0, 3.2094, -3.98198, 10.689, 31.5318 )
-material = ExtResource( 4 )
+[node name="Suelo" type="MeshInstance3D" parent="Suelo3"]
+transform = Transform3D(0.272082, 0, 0, 0, 1, 0, 0, 0, 0.272082, 0, 0, 0)
+mesh = SubResource( "3" )
 
-[node name="Poste2" type="CSGBox" parent="CSGCombiner"]
-transform = Transform( 5.20885, 0, 0, 0, 134.1, 0, 0, 0, 3.2094, 49.018, 10.689, 28.5318 )
-material = ExtResource( 4 )
+[node name="Plataforma" type="AnimatableBody3D" parent="."]
+transform = Transform3D(50, 0, 0, 0, 1, 0, 0, 0, 50, -1.4378, -2.63183, 1.88546)
+physics_material_override = SubResource( "PhysicsMaterial_6x0rw" )
 
-[node name="Plataforma" type="RigidBody" parent="."]
-transform = Transform( 14, 0, 0, 0, 0.312, 0, 0, 0, 6, 0.232, 2, -16 )
-mode = 3
+[node name="Plataforma" type="MeshInstance3D" parent="Plataforma"]
+mesh = SubResource( "3" )
 
-[node name="Plataforma" type="MeshInstance" parent="Plataforma"]
-mesh = SubResource( 3 )
-material/0 = null
+[node name="PlataformaCS" type="CollisionShape3D" parent="Plataforma"]
+shape = SubResource( "BoxShape3D_hrap8" )
 
-[node name="CollisionShape" type="CollisionShape" parent="Plataforma"]
-shape = SubResource( 4 )
+[node name="StaticBody2" type="StaticBody3D" parent="."]
+transform = Transform3D(9.31669, 0, 0, 0, 1.89999, 0, 0, 0, 1.89749, 0, 0, -5.14806)
 
-[node name="Suelo3" type="StaticBody" parent="."]
-transform = Transform( 47.6809, 0, 0, 0, 0.314286, 0, 0, 0, 47.6809, 22.2245, -1.52493, 3.53102 )
+[node name="MeshInstance3" type="MeshInstance3D" parent="StaticBody2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.347056)
+mesh = ExtResource( "4_r5ch8" )
 
-[node name="Suelo" type="MeshInstance" parent="Suelo3"]
-transform = Transform( 0.272082, 0, 0, 0, 1, 0, 0, 0, 0.272082, -0.466109, 4.85205, -0.0740552 )
-mesh = SubResource( 3 )
-material/0 = ExtResource( 4 )
+[node name="@@121084" type="CollisionShape3D" parent="StaticBody2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.347056)
+shape = SubResource( "ConvexPolygonShape3D_8dw1s" )
 
-[node name="CollisionShape2" type="CollisionShape" parent="Suelo3"]
-transform = Transform( 0.272082, 0, 0, 0, 1, 0, 0, 0, 0.272082, -0.466109, 4.85205, -0.0740552 )
-shape = SubResource( 4 )
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( "Environment_6sor4" )
 
-[node name="PlataformaEl" type="StaticBody" parent="."]
-transform = Transform( 12.9731, 0, 0, 0, 0.314286, 0, 0, 0, 12.9731, 0, 0, 0 )
-
-[node name="Suelo2" type="MeshInstance" parent="PlataformaEl"]
-transform = Transform( 3.67537, 0, 0, 0, 1, 0, 0, 0, 3.67537, 1.71312, -4.85205, 0.27218 )
-mesh = SubResource( 3 )
-material/0 = ExtResource( 4 )
-
-[node name="CollisionShape" type="CollisionShape" parent="PlataformaEl"]
-transform = Transform( 3.67537, 0, 0, 0, 1, 0, 0, 0, 3.67537, 1.71312, -4.85205, 0.27218 )
-shape = SubResource( 4 )
-
-[node name="StaticBody2" type="StaticBody" parent="."]
-transform = Transform( 9.31669, 0, 0, 0, 1.89999, 0, 0, 0, 1.89749, 0, 0, -5.14806 )
-
-[node name="MeshInstance3" type="MeshInstance" parent="StaticBody2"]
-mesh = SubResource( 5 )
-material/0 = null
-
-[node name="CollisionShape" type="CollisionShape" parent="StaticBody2"]
-shape = SubResource( 6 )
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldEnvironment"]
+transform = Transform3D(1, 0, 0, 0, 0.512178, 0.85888, 0, -0.85888, 0.512178, 2.75201, 19.8759, -0.598628)
+shadow_enabled = true

@@ -9,7 +9,7 @@ func _ready():
 	pass
 
 func initializeSuper(inputID: int):
-	playerNameLabel = find_node("PlayerName") 
+	playerNameLabel = $Panel/PlayerName 
 	id =  inputID
 	playerName = OnlineModule.getPlayerName(inputID)
 	changeName(playerName)

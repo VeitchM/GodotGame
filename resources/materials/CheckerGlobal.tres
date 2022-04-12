@@ -1,0 +1,12 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://b15ct6n6hkr83"]
+
+[ext_resource type="Texture2D" uid="uid://dch6eascl7p05" path="res://scenes/Debugger/CheckerTexture.png" id="1_b3fqs"]
+
+[resource]
+albedo_texture = ExtResource( "1_b3fqs" )
+uv1_scale = Vector3(0.05, 0.05, 0.05)
+uv1_triplanar = true
+uv1_world_triplanar = true
+grow_amount = 0.546
+point_size = 68.7
+proximity_fade_distance = 0.0
