@@ -3,8 +3,8 @@
 [ext_resource type="PackedScene" uid="uid://edk3r1cr3wb1" path="res://scenes/LAN/jugadores.tscn" id="1"]
 [ext_resource type="Script" path="res://scenes/LAN/myPlayer.gd" id="2"]
 
-[node name="Control" instance=ExtResource( "1" )]
-script = ExtResource( "2" )
+[node name="Control" instance=ExtResource("1")]
+script = ExtResource("2")
 
 [node name="PlayerName" type="Button" parent="Panel" index="0"]
 anchor_left = 0.5
@@ -13,8 +13,5 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 text = "Player Name"
 clip_text = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [connection signal="pressed" from="Panel/PlayerName" to="." method="changePlayerName"]

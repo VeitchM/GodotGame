@@ -1,7 +1,7 @@
 extends Node
 
 class Player:
-	var id : int = 0
+	var id : int = 1
 	var playerName : String = "Jorge"
 	var ready : bool = false
 	var ping : int = 0
@@ -65,7 +65,7 @@ func host() -> int: #Start the host systems, if fails it returns 1
 		print("Server failed to start")
 		return 1
 	else:
-		get_tree().multiplayer = network
+		get_tree().get_multiplayer().set_multiplayer_peer(network) #throw error, would it work without?
 		print("Server started succesfully")
 		isServer = true
 		actualPlayerInfo.id = network.get_unique_id()
@@ -85,7 +85,7 @@ func searchServers():
 
 func connectToHost( ip ):
 		network.create_client(ip, SERVERPORT)
-		get_tree().set_network_peer(network)
+		get_tree().network_peer = network
 		network.connection_failed.connect(self._connection_failed)	
 		network.connection_succeeded.connect(self._connection_succeeded)
 		network.server_disconnected.connect(self._server_disconnected)

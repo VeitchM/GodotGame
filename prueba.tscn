@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="PackedScene" path="res://characters/3PCharacter/TPCharacter.tscn" id="1_gcxgh"]
+
+[node name="TPCharacter" instance=ExtResource("1_gcxgh")]

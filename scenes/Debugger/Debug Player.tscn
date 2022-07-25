@@ -1,49 +1,42 @@
 [gd_scene load_steps=3 format=3 uid="uid://dlfvnuej66sxn"]
 
 [ext_resource type="Script" path="res://scenes/Debugger/DebugPlayer.gd" id="1"]
-
-[sub_resource type="CompressedTexture2D" id="1"]
+[ext_resource type="Texture2D" uid="uid://br2c4bb1sf8l4" path="res://resources/2d/Icons/Point2.png" id="2_7ejpp"]
 
 [node name="Debug Player" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-script = ExtResource( "1" )
+offset_left = -76.0
+offset_top = 168.0
+offset_right = -76.0
+offset_bottom = 168.0
+pivot_offset = Vector2(11, 22)
+script = ExtResource("1")
 
 [node name="Control" type="Control" parent="."]
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Map" type="Sprite2D" parent="Control"]
-modulate = Color(1, 1, 1, 0.223529)
-position = Vector2(160, 160)
-scale = Vector2(0.6, 0.6)
-texture = SubResource( "1" )
-
-[node name="Axis" type="Sprite2D" parent="Control"]
-position = Vector2(160, 160)
-scale = Vector2(0.02, 0.02)
-texture = SubResource( "1" )
-
-[node name="VelocityFloor" type="Sprite2D" parent="Control"]
-scale = Vector2(0.05, 0.03)
-texture = SubResource( "1" )
 
 [node name="Velocity" type="Sprite2D" parent="Control"]
-scale = Vector2(0.03, 0.03)
-texture = SubResource( "1" )
+position = Vector2(168, -74)
+scale = Vector2(0.197685, 0.197685)
+texture = ExtResource("2_7ejpp")
 
 [node name="Velocity2" type="Sprite2D" parent="Control"]
-scale = Vector2(0.03, 0.05)
-texture = SubResource( "1" )
+position = Vector2(201.211, -88.6287)
+scale = Vector2(0.0390794, 0.0390794)
+texture = ExtResource("2_7ejpp")
 
 [node name="Walk" type="Sprite2D" parent="Control"]
-scale = Vector2(0.025, 0.025)
-texture = SubResource( "1" )
+position = Vector2(209.074, -92.0923)
+scale = Vector2(0.0015272, 0.0015272)
+texture = ExtResource("2_7ejpp")
+
+[node name="VelocityFloor" type="Sprite2D" parent="Control"]
+position = Vector2(209.074, -92.0923)
+scale = Vector2(0.0015272, 0.0015272)
+texture = ExtResource("2_7ejpp")
 
 [node name="Panel" type="Label" parent="Control"]
-text = "
-"
-__meta__ = {
-"_edit_use_anchors_": false
-}
+offset_left = 98.0
+offset_top = 55.0
+offset_right = 138.0
+offset_bottom = 78.0

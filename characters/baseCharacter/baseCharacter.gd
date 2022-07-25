@@ -2,7 +2,7 @@ extends CharacterBody3D
 class_name BaseCharacter #abstract
 
 
-var animationController 
+var animationController : AnimationController 
 @onready var lookPivot : Node3D = $LookPivot
 @onready var rayCast3D : RayCast3D = $LookPivot/RayCast3D
 #You must asignate this value in the instance of any not abstract sublass
@@ -25,9 +25,9 @@ var normal : Vector3 = Vector3(0,1,0)
 var isFalling : bool  #use for verify if it was falling in the preview instant
 
 
-var id : int
+var id : int = 1
 var charState : CharState
-
+var weaponEquiped = {"name": "Pistol", "Damage" : 100}
 
 class CharState: #It has the variables velocity : Vector3 position : Vector3 walk: Vector3 rotation : Vector2 action : int v action : int health : float timestamp : int
 	var velocity : Vector3
@@ -118,7 +118,7 @@ func useInfoToServer(info : CharacterForServer):
 
 #::CharForClient::::::::::::::::::::::::::::::::::::::::::::::::
 class CharacterToClient:
-	var id : int = 0
+	var id : int = 1
 	var ping : int 
 	var position  :Vector3
 	var walk :Vector3
@@ -169,12 +169,14 @@ func _ready():
 	print(name, " base Character ready ",get_instance_id() )
 	hookFunctionalities = load("res://characters/functionalities/Hook.gd").new()
 	print("hookLoaded")
+	weaponEquiped = load("res://Game/weapons/pistol/pistol.gd").new()
 	hookFunctionalities.addChilds(get_parent())
 	charState.position = position
 	set_floor_stop_on_slope_enabled(false)
 	set_floor_snap_length(0.0)
-
-
+	
+	#moving_platform_apply_velocity_on_leave=2
+	#motion_mode = 1
 
 
 
@@ -186,27 +188,36 @@ func hook():
 func changeHookLength(length: float):
 	hookFunctionalities.changeLength(length)
 
+func isOnFloor(): #usefull if everything is a wall
+	if is_on_floor() || is_on_wall():
+		if get_wall_normal().dot(Vector3.UP)> 0.4: #sen(maxAngle)
+			return true
+	return false
+		
 
+var frictionDebug
 func fallingAndFriction(delta): #Verifies if it is falling in that case add velocity and in the other add the friction to velocity and assign a counter normal velocity
 	if not is_on_floor():
 		isFalling = true
 		charState.velocity += WorldProperties.gravity*delta / airFriction
 	else:
-		normal = get_floor_normal()
+		normal = get_floor_normal().normalized()
 	#	if isFalling == true : before it just verify if it was falling once and assigned velocity
-		charState.velocity -= normal # + charState.velocity.project(normal) 
+		charState.velocity -=   normal # + charState.velocity.project(normal) 
 		isFalling = false
+		frictionDebug = friction(delta)	
 		charState.velocity += friction(delta)		
+		
 
 
 func friction(delta) -> Vector3 :
 	var relativeVel = charState.velocity - get_platform_velocity() 
 	#print("the floors go %f %f %f " %[get_floor_velocity().x, get_floor_velocity().y, get_floor_velocity().z] )
-	var friction : Vector3= -relativeVel.slide(normal)
-	if friction.length() >  WorldProperties.mu * delta: #The first part is to know the parallalel component of the velocity with the "floor" negative toDO in the future add multiples mu, deppending on the material
-		return friction.normalized() * WorldProperties.mu * delta
+	var frictionV : Vector3= -relativeVel.slide(normal)
+	if frictionV.length() >  WorldProperties.mu * delta: #The first part is to know the parallalel component of the velocity with the "floor" negative toDO in the future add multiples mu, deppending on the material
+		return frictionV.normalized() * WorldProperties.mu * delta
 	else:
-		return friction
+		return frictionV
 
 #::::::::Movement:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -238,6 +249,18 @@ func turn(_rotation : Vector2):
 	rotation.y = _rotation.y
 	lookPivot.rotation.x = _rotation.x
 	
+#:::::::::::::Health:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+func receiveDamage(damage : float):
+	charState.health -= damage
+	if charState.health < 0 : 
+		die()
+		return
+	animationController.receiveDamage(damage)
+	print("health: ", charState.health)
+
+func die():
+	animationController.die()
+	#respawn, points, etc
 
 #:::::::::::::Weapon related::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -247,10 +270,18 @@ func reload(): #for now it just initialize the animation in animation controller
 
 func shot(): #for now it just initialize the animation in animation controller
 	animationController.shot()
+	if( OnlineModule.isServer):
+		weaponEquiped.shot(rayCast3D)
+
+func getShoted(weapon :Weapon):
+	receiveDamage(weapon.damage)
+
+#:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
 
 func baseCharPhysics(delta): #simulates velocity, it has to be calculated only by the server and the player for his character
 	#toDo maybe use a thread
-	charState.velocity = ( position - charState.walk *delta - charState.position  )/delta
+	charState.velocity =(position - charState.position) / delta - charState.walk
 	charState.position = position
 
 	fallingAndFriction(delta)
@@ -258,10 +289,10 @@ func baseCharPhysics(delta): #simulates velocity, it has to be calculated only b
 	jump()
 	# Lo de restarle la velocidad del piso lo hago porque sino es dificil el manejo de la friccion
 
-	
+#::::::::::::::::::::::::::::::::::::Physic process::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 func _physics_process(delta):
 	#print(name, " base Character _physics_process ",get_instance_id() )
-	velocity = charState.velocity + charState.walk - get_platform_velocity()
+	velocity =  charState.walk + charState.velocity - get_platform_velocity()
 	move_and_slide()
 	animationController.movementSpeed(charState.walk) #Where i send it it knows its global rotation
 	hookFunctionalities.render(position)

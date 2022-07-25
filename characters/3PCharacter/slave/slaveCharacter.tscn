@@ -1,7 +1,7 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=3 format=3 uid="uid://jlihsob6qhr5"]
 
-[ext_resource path="res://characters/3PCharacter/slave/slaveCharacter.gd" type="Script" id=1]
-[ext_resource path="res://characters/3PCharacter/3PCharacter.tscn" type="PackedScene" id=2]
+[ext_resource type="PackedScene" uid="uid://clcbrh2o1jqqu" path="res://characters/3PCharacter/TPCharacter.tscn" id="1"]
+[ext_resource type="Script" path="res://characters/3PCharacter/slave/slaveCharacter.gd" id="2"]
 
-[node name="3PCharacter" instance=ExtResource( 2 )]
-script = ExtResource( 1 )
+[node name="slaveCharacter" instance=ExtResource("1")]
+script = ExtResource("2")

@@ -27,10 +27,13 @@ func addChilds(object : Node):
 	object.call_deferred("add_child",rope)
 
 func hook(rayCast3D : RayCast3D, position : Vector3):#It sets the local position of the hook in the hooked object and sets hook = true
+	print("Hook Function %s" %isHooked)
 	if isHooked == true:
+		
 		unHook()
 	else:
 		hookedObject = rayCast3D.get_collider()
+		print("The collider was : %s"  %hookedObject)
 		if !!hookedObject:
 			isHooked = true
 			hookPoint = rayCast3D.get_collision_point() - hookedObject.position #It sets the local position of the hook in the hooked object

@@ -12,7 +12,7 @@ var direction : Vector3
 
 func _init():
 	print("Rope")
-	hide()
+	#hide()
 	
 
 func add(objectiveI: Vector3):

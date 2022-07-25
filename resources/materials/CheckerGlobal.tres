@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://dch6eascl7p05" path="res://scenes/Debugger/CheckerTexture.png" id="1_b3fqs"]
 
 [resource]
-albedo_texture = ExtResource( "1_b3fqs" )
+albedo_texture = ExtResource("1_b3fqs")
 uv1_scale = Vector3(0.05, 0.05, 0.05)
 uv1_triplanar = true
 uv1_world_triplanar = true

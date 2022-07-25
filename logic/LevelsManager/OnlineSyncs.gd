@@ -21,7 +21,7 @@ func initialize(scene):#same for client and server, it puts players in its place
 	if OnlineModule.isServer:
 		puppetScript = load("res://characters/3PCharacter/slave/slaveCharacter.tscn")
 	else:
-		puppetScript = load("res://characters/3PCharacter/puppetCharacter/puppetCharacter.tscn")
+		puppetScript = load("res://characters/3PCharacter/puppet/puppetCharacter.tscn")
 	var puppetChar# toDo put the type: 
 
 #Adds the characters in the world, i dont know where

@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://characters/player/PlayerPov.gd" id="2"]
 
 [node name="PlayerPov" type="Node3D"]
-script = ExtResource( "2" )
+script = ExtResource("2")
 
-[node name="riggedHandAcceptable" parent="." instance=ExtResource( "1" )]
+[node name="riggedHandAcceptable" parent="." instance=ExtResource("1")]
 script = null

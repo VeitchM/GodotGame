@@ -13,4 +13,4 @@ func _ready():
 
 func _physics_process(delta): # maybe a threat
 	time = OnlineModule.getServerTime() - OnlineModule.actualPlayerInfo.ping # I choose this so the server simulates the same as the player with itself
-	plataforma.position.x =  sin( time/800.0) *10.0
+	plataforma.position.x =  sin( time/8000.0) *10.0

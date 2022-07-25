@@ -1,75 +1,122 @@
-[gd_scene load_steps=12 format=3 uid="uid://qk7j2q2ro0uk"]
+[gd_scene load_steps=15 format=3 uid="uid://dv0aw23y7qiwt"]
 
 [ext_resource type="Material" uid="uid://dkn8sk04k12bg" path="res://resources/materials/Checker.tres" id="2_11jah"]
 [ext_resource type="Script" path="res://Game/testWorld.gd" id="3"]
 [ext_resource type="Material" uid="uid://b15ct6n6hkr83" path="res://resources/materials/CheckerGlobal.tres" id="3_tpbvs"]
 [ext_resource type="PrismMesh" uid="uid://crc1nbj8k86uv" path="res://Game/Mesh_.tres" id="4_r5ch8"]
+[ext_resource type="PackedScene" uid="uid://jlihsob6qhr5" path="res://characters/3PCharacter/slave/slaveCharacter.tscn" id="5_vxdgp"]
+[ext_resource type="PackedScene" uid="uid://dhrmpjsv3rfe1" path="res://characters/3PCharacter/puppet/puppetCharacter.tscn" id="9_4uj20"]
 
 [sub_resource type="BoxMesh" id="3"]
-material = ExtResource( "2_11jah" )
+material = ExtResource("2_11jah")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_rcbo6"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_6x0rw"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_hrap8"]
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_8dw1s"]
-points = PackedVector3Array(-1, -1, -1, 0.0293034, 0.941393, 0.941393, 0.147043, 0.705915, 0.94122, -1, -1, 1, 1, -1, -1, -0.0293034, 0.941393, -0.941393, 1, -1, 1, -0.0293034, 0.941393, 0.941393, 0.0293034, 0.941393, -0.941393)
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_723un"]
+data = PackedVector3Array(0, 1, 1, 1, -1, 1, -1, -1, 1, 0, 1, -1, -1, -1, -1, 1, -1, -1, 0, 1, 1, 0, 1, -1, 1, -1, 1, 0, 1, -1, 1, -1, -1, 1, -1, 1, 0, 1, -1, 0, 1, 1, -1, -1, -1, 0, 1, 1, -1, -1, 1, -1, -1, -1, -1, -1, 1, 1, -1, 1, -1, -1, -1, 1, -1, 1, 1, -1, -1, -1, -1, -1)
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_ebxe2"]
 rayleigh_coefficient = 1.98
 
 [sub_resource type="Sky" id="Sky_aiwke"]
-sky_material = SubResource( "PhysicalSkyMaterial_ebxe2" )
+sky_material = SubResource("PhysicalSkyMaterial_ebxe2")
 
 [sub_resource type="Environment" id="Environment_6sor4"]
 background_mode = 2
-sky = SubResource( "Sky_aiwke" )
+sky = SubResource("Sky_aiwke")
 ambient_light_source = 3
-ss_reflections_enabled = true
 ssao_enabled = true
 
 [node name="world" type="Node3D"]
-script = ExtResource( "3" )
+script = ExtResource("3")
+
+[node name="Suelo4" type="StaticBody3D" parent="."]
+transform = Transform3D(100, 0, 0, 0, 0.099, 0, 0, 0, 100, -12.32, 0, 14)
+
+[node name="Suelo" type="MeshInstance3D" parent="Suelo4"]
+transform = Transform3D(0.272082, 0, 0, 0, 1, 0, 0, 0, 0.272082, 0, 0, 0)
+mesh = SubResource("3")
+skeleton = NodePath("../../Suelo4")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Suelo4"]
+transform = Transform3D(0.272082, 0, 0, 0, 1, 0, 0, 0, 0.272082, 0, 0, 0)
+shape = SubResource("BoxShape3D_rcbo6")
 
 [node name="CSGCombiner" type="CSGCombiner3D" parent="."]
 use_collision = true
 
 [node name="Piso" type="CSGBox3D" parent="CSGCombiner"]
 transform = Transform3D(397.71, 0, 0, 0, 1, 0, 0, 0, 259.107, -44.9508, -13.3678, -25.1356)
-material_override = ExtResource( "2_11jah" )
-material = ExtResource( "3_tpbvs" )
+material_override = ExtResource("2_11jah")
+material = ExtResource("3_tpbvs")
 
 [node name="Suelo3" type="StaticBody3D" parent="."]
 transform = Transform3D(47.6809, 0, 0, 0, 0.314286, 0, 0, 0, 47.6809, 5.30926, 3.14979, 13.8314)
 
 [node name="Suelo" type="MeshInstance3D" parent="Suelo3"]
 transform = Transform3D(0.272082, 0, 0, 0, 1, 0, 0, 0, 0.272082, 0, 0, 0)
-mesh = SubResource( "3" )
+mesh = SubResource("3")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Suelo3"]
+transform = Transform3D(0.272082, 0, 0, 0, 1, 0, 0, 0, 0.272082, 0, 0, 0)
+shape = SubResource("BoxShape3D_rcbo6")
 
 [node name="Plataforma" type="AnimatableBody3D" parent="."]
 transform = Transform3D(50, 0, 0, 0, 1, 0, 0, 0, 50, -1.4378, -2.63183, 1.88546)
-physics_material_override = SubResource( "PhysicsMaterial_6x0rw" )
+physics_material_override = SubResource("PhysicsMaterial_6x0rw")
 
 [node name="Plataforma" type="MeshInstance3D" parent="Plataforma"]
-mesh = SubResource( "3" )
+mesh = SubResource("3")
 
 [node name="PlataformaCS" type="CollisionShape3D" parent="Plataforma"]
-shape = SubResource( "BoxShape3D_hrap8" )
+shape = SubResource("BoxShape3D_hrap8")
 
 [node name="StaticBody2" type="StaticBody3D" parent="."]
 transform = Transform3D(9.31669, 0, 0, 0, 1.89999, 0, 0, 0, 1.89749, 0, 0, -5.14806)
 
 [node name="MeshInstance3" type="MeshInstance3D" parent="StaticBody2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.347056)
-mesh = ExtResource( "4_r5ch8" )
+mesh = ExtResource("4_r5ch8")
 
-[node name="@@121084" type="CollisionShape3D" parent="StaticBody2"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.347056)
-shape = SubResource( "ConvexPolygonShape3D_8dw1s" )
+shape = SubResource("ConcavePolygonShape3D_723un")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource( "Environment_6sor4" )
+environment = SubResource("Environment_6sor4")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldEnvironment"]
-transform = Transform3D(1, 0, 0, 0, 0.512178, 0.85888, 0, -0.85888, 0.512178, 2.75201, 19.8759, -0.598628)
+transform = Transform3D(-0.405259, 0.905898, 0.122942, -0.614426, -0.369475, 0.697115, 0.676939, 0.206973, 0.70634, 2.75201, 19.8759, -0.598628)
 shadow_enabled = true
+
+[node name="Suelo5" type="StaticBody3D" parent="."]
+transform = Transform3D(2.51473, -0.191205, -182.802, 0.41009, 1.1725, -29.8106, 61.0979, 4.65904e-09, 7.72404, -40.8681, -6.16691, -11.6763)
+
+[node name="Suelo" type="MeshInstance3D" parent="Suelo5"]
+transform = Transform3D(0.272082, 0, 0, 0, 1, 0, 0, 0, 0.272082, 0, 0, 0)
+mesh = SubResource("3")
+skeleton = NodePath("../../Suelo5")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Suelo5"]
+transform = Transform3D(0.272082, 0, 0, 0, 1, 0, 0, 0, 0.272082, 0, 0, 0)
+shape = SubResource("BoxShape3D_rcbo6")
+
+[node name="Suelo6" type="StaticBody3D" parent="."]
+transform = Transform3D(76.0377, -0.649423, 0.872654, 64.9448, 0.760406, 0, -0.663571, 0.00566743, 99.9962, -30.6046, -4.16664, 10.8552)
+
+[node name="Suelo" type="MeshInstance3D" parent="Suelo6"]
+transform = Transform3D(0.272082, 0, 0, 0, 1, 0, 0, 0, 0.272082, 0, 0, 0)
+mesh = SubResource("3")
+skeleton = NodePath("../../Suelo6")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Suelo6"]
+transform = Transform3D(0.272082, 0, 0, 0, 1, 0, 0, 0, 0.272082, 0, 0, 0)
+shape = SubResource("BoxShape3D_rcbo6")
+
+[node name="slaveCharacter" parent="." instance=ExtResource("5_vxdgp")]
+
+[node name="puppetCharacter" parent="." instance=ExtResource("9_4uj20")]

@@ -23,9 +23,7 @@ func _enter_tree():
 
 func broadcast():
 	serverInfo.name = OnlineModule.serverName
-	var json = JSON.new()
-	var packetMessage = json.stringify(serverInfo)#.to_ascii()#no se si es necesario
-	socketUDP.put_packet(packetMessage)
+	socketUDP.put_packet(PackedByteArray([serverInfo]))
 	#print(serverInfo)
 	#print(parse_json( packetMessage.get_string_from_ascii()) )
 	

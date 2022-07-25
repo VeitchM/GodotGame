@@ -3,4 +3,4 @@
 [ext_resource type="Material" uid="uid://dkn8sk04k12bg" path="res://resources/materials/Checker.tres" id="1_18wl7"]
 
 [resource]
-material = ExtResource( "1_18wl7" )
+material = ExtResource("1_18wl7")

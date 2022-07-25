@@ -1,4 +1,4 @@
-extends Node3D
+extends AnimationController
 class_name PlayerPov
 
 @onready var handsAnimationTree = $riggedHandAcceptable/AnimationTree
@@ -22,6 +22,13 @@ func reload():
 	print("recargo")
 	
 func jump():
+	pass
+
+func receiveDamage(damage :  float):
+
+	pass
+
+func die():
 	pass
 
 func turn(speed : Vector2):

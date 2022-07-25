@@ -19,7 +19,7 @@ func _ready():
 
 func loaderThreaded(path : String, ObjectToLoad : int): #load in a thread, and put in the tree toDo more generic couldnt be called from any object and the objects decides be its own method where to assign it
 	var loader = Thread.new()
-	loader.start(loaderForThread,[loader,path,ObjectToLoad])
+	loader.start(loaderForThread.bind([loader,path,ObjectToLoad])) #patch, in godot 3 you put a function and it's arguments
 	#loaderForThread([loader,path,ObjectToLoad])
 
 func loaderForThread(vector):#Method intended to be call from a thread injection Danger

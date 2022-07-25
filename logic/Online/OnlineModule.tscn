@@ -3,4 +3,4 @@
 [ext_resource type="Script" path="res://logic/Online/OnlineModule.gd" id="1"]
 
 [node name="OnlineModule" type="Node"]
-script = ExtResource( "1" )
+script = ExtResource("1")

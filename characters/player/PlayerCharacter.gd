@@ -13,7 +13,7 @@ var serverCorrectionInfo
 ###########################################################################################
 
 
-signal newPlayersData
+signal sNewPlayersData
 
 func _init():
 	super._init()
@@ -27,9 +27,11 @@ func _ready():
 	animationController = $LookPivot/POV
 	print(name, " Player finishing ready ",get_instance_id() )
 	set_physics_process(true)
+	#debugPlayer()
 
-
-	
+func debugPlayer():
+		var debugger = load("res://scenes/Debugger/Debug Player.tscn").instantiate()
+		call_deferred("add_child",debugger)
 	
 	
 	
@@ -75,8 +77,10 @@ func correctionFromServer(loc : Vector3):
 
 func _physics_process(delta):
 	#print(name, " Player Physics ",get_instance_id() )
-	correctionFromServer(Vector3(0,0,0))#toDo
+	
 	baseCharPhysics(delta)
+	correctionFromServer(Vector3(0,0,0))#toDo
+	
 	running(get_input_direction(),delta)
 	if Input.is_action_pressed("jump") and !isFalling: #cambiar a que dependa del tiempo
 		jumpForce += 50 * delta
@@ -92,6 +96,7 @@ func _physics_process(delta):
 		#OnlineModule.sendPlayerInfoInGame(infoToServer())
 	charState.action = 0
 	super._physics_process(delta)
+	emit_signal("sNewPlayersData")
 	
 func hookControls():
 	if Input.is_action_pressed("retractHook"):

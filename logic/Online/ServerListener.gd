@@ -8,15 +8,15 @@ var cleanUpTimer = Timer.new()
 var socketUDP = PacketPeerUDP.new()
 var listenPort = OnlineModule.CLIENTPORT
 
+var serverCleanUpThreshold = 7000 #Miliseconds until server it's deleted
 var knownServers = {}
 
-export (int) var serverCleanUpThreshold = 3 # no se para que se exporta
 
 func _init():
 	cleanUpTimer.wait_time = serverCleanUpThreshold
 	cleanUpTimer.one_shot = false
 	cleanUpTimer.autostart = true
-	cleanUpTimer.connect("timeout",self,"_cleanUp") 
+	cleanUpTimer.timeout.connect(_cleanUp) 
 	add_child(cleanUpTimer)
 
 # Called when the node enters the scene tree for the first time.
@@ -39,22 +39,21 @@ func _process(delta):
 		
 		if serverIP != "" and serverPort > 0:
 			if not knownServers.has(serverIP):
-				var serverMessage = stream.get_string_from_ascii()
-				var gameInfo = parse_json(serverMessage)
+				var gameInfo = Array(stream)[0]
 				gameInfo.ip = serverIP
-				gameInfo.lastSeen = OS.get_unix_time()
+				gameInfo.lastSeen = Time.get_ticks_msec()
 				knownServers[serverIP] = gameInfo
 				print("new server %s" %serverIP)
 				emit_signal("newServer",gameInfo) #esto sera escuchado por la ui pertinente
 			
 			else:
-				print(OS.get_unix_time())
-				knownServers[serverIP].lastSeen = OS.get_unix_time()
+				print(Time.get_ticks_msec())
+				knownServers[serverIP].lastSeen = Time.get_ticks_msec()
 
 
 #se encarga de verificar que servers no responden hace rato y borrarlos
 func _cleanUp():
-	var now = OS.get_unix_time()
+	var now = Time.get_ticks_msec()
 	for serverIP in knownServers:
 		if(now - knownServers[serverIP].lastSeen) > serverCleanUpThreshold:
 			knownServers.erase(serverIP)
